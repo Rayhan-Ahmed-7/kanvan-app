@@ -1,20 +1,21 @@
-import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import BaseApi from "./base_api";
+import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
-class AxiosService extends BaseApi {
+class AxiosService {
     static client: AxiosInstance;
-    constructor() {
-        super()
-        AxiosService.client = this.api;
-    }
     init() {
-        this.api.interceptors.request.use((req: InternalAxiosRequestConfig) => {
+        AxiosService.client = axios.create({
+            baseURL: import.meta.env.API_URL,
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+        AxiosService.client.interceptors.request.use((req: InternalAxiosRequestConfig) => {
             req.headers.Authorization = 'hi';
             return req;
         }, (err: AxiosError) => {
             return err;
         });
-        this.api.interceptors.response.use((res: AxiosResponse) => {
+        AxiosService.client.interceptors.response.use((res: AxiosResponse) => {
             return res;
         }, (err: AxiosError) => {
             return err;
