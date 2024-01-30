@@ -25,5 +25,8 @@ class AxiosService {
     static get = (url: string, data: object) => {
         return this.client.get(url, data);
     }
+    static post = (url: string, data: object, options?: object) => {
+        return this.client.post(url, data, options);
+    }
 }
 export default AxiosService;
