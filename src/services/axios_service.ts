@@ -4,7 +4,7 @@ class AxiosService {
     static client: AxiosInstance;
     init() {
         AxiosService.client = axios.create({
-            baseURL: import.meta.env.API_URL,
+            baseURL: import.meta.env.VITE_API_URL,
             headers: {
                 "Content-Type": "application/json"
             },
@@ -22,7 +22,8 @@ class AxiosService {
         });
         console.log("🍉 AxiosService initialized!")
     }
-    static get = (url: string, data: object) => {
+    static get = (url: string, data?: object) => {
+        console.log(this.client,"asfdasf")
         return this.client.get(url, data);
     }
     static post = (url: string, data: object, options?: object) => {
