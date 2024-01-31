@@ -9,9 +9,7 @@ const authUtils = {
             if (!token) {
                 return false;
             }
-            console.log("user", "user")
             const user = await AxiosService.get(Urls.verifyToken);
-            console.log("user1", "user1")
             return user;
         } catch (err) {
             return false;

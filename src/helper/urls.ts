@@ -1,5 +1,5 @@
 const Urls = {
-    verifyToken: 'verify-token'
+    verifyToken: 'auth/verify-token'
 }
 
 export default Urls;

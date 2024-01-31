@@ -3,18 +3,19 @@ import { Outlet, useNavigate } from "react-router-dom";
 import authUtils from "../utils/authUtils";
 import Loading from "../components/common/Loading";
 import { Box, Container } from "@mui/material";
+import assets from "../assets";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const checkAuth = async () => {
-            console.log("calling")
-            const isAuth = await authUtils.isAuthenticated();
-            if (isAuth) {
+            const user = await authUtils.isAuthenticated();
+            if (!user) {
+                navigate('/login');
                 setLoading(false);
             } else {
-                navigate('/');
+                setLoading(false)
             }
         }
         checkAuth();
@@ -29,7 +30,7 @@ const AuthLayout = () => {
                 alignItems: 'center',
                 flexDirection: 'column'
             }}>
-                <img src='assets/logo/logo.svg' />
+                <img src={assets.logo.light} height={100}/>
                 <Outlet/>
             </Box>
         </Container>
