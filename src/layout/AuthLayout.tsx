@@ -8,6 +8,7 @@ import assets from "../assets";
 const AuthLayout = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    console.log("hi")
     useEffect(() => {
         const checkAuth = async () => {
             const user = await authUtils.isAuthenticated();

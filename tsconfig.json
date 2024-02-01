@@ -5,6 +5,12 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    
+    /* extra option for mui */
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    /* extra option for mui */
 
     /* Bundler mode */
     "moduleResolution": "bundler",
