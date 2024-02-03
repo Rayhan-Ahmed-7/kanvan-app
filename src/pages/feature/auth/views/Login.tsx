@@ -1,15 +1,23 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, FormControl, IconButton, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import useAuth from "../hooks/useAuth";
 import { DataStatus } from "../../../../utils/types";
 import { FormEvent } from "react";
 import { Link } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
-    const { data, dataStatus, login } = useAuth();
+    const { data, dataStatus, login, showPassword, handleShowPassword } = useAuth();
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log(e)
+        let formData = new FormData(e.target as HTMLFormElement);
+        let username = formData.get('username') as string;
+        let password = formData.get('password') as string;
+        console.log(username, password)
+        if (username != null && password != null) {
+            login({ username, password});
+        }
     }
     return (
         <Box
@@ -27,16 +35,22 @@ const Login = () => {
                 label="username"
                 name="username"
             />
-            <TextField
-                margin="normal"
-                fullWidth
-                required
-                disabled={dataStatus == DataStatus.loading ? true : false}
-                id="password"
-                label="password"
-                name="password"
-                type="password"
-            />
+            <FormControl margin="normal" fullWidth variant="outlined">
+                <InputLabel>password</InputLabel>
+                <OutlinedInput
+                    id="password"
+                    name="password"
+                    label="password"
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                        <IconButton
+                            onClick={handleShowPassword}
+                        >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    }
+                />
+            </FormControl>
             <LoadingButton
                 sx={{ mt: 3, mb: 2 }}
                 variant="outlined"
@@ -47,7 +61,7 @@ const Login = () => {
             >
                 Login
             </LoadingButton>
-            <Button component={Link} to={'/register'} sx={{textTransform:'none'}}>
+            <Button component={Link} to={'/register'} sx={{ textTransform: 'none', textAlign: "center" }}>
                 Don't have an account? Register
             </Button>
         </Box>

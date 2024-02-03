@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import authUtils from "../utils/authUtils";
-import Loading from "../components/common/Loading";
 import { Box, Container } from "@mui/material";
 import assets from "../assets";
+import { useEffect, useState } from "react";
+import authUtils from "../utils/authUtils";
+import Loading from "../components/common/Loading";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    console.log("hi")
     useEffect(() => {
         const checkAuth = async () => {
             const user = await authUtils.isAuthenticated();
             if (!user) {
-                navigate('/login');
                 setLoading(false);
             } else {
-                setLoading(false)
+                navigate('/');
             }
         }
         checkAuth();
@@ -31,8 +29,8 @@ const AuthLayout = () => {
                 alignItems: 'center',
                 flexDirection: 'column'
             }}>
-                <img src={assets.logo.light} height={100}/>
-                <Outlet/>
+                <img src={assets.logo.light} height={100} />
+                <Outlet />
             </Box>
         </Container>
     )

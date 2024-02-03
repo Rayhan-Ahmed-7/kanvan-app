@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import LocalStorageService from "./ localStorageService";
 
 class AxiosService {
     static client: AxiosInstance;
@@ -10,7 +11,7 @@ class AxiosService {
             },
         })
         AxiosService.client.interceptors.request.use((req: InternalAxiosRequestConfig) => {
-            req.headers.Authorization = 'hi';
+            req.headers.Authorization = `Bearer ${LocalStorageService.getAccessToken()}`;
             return req;
         }, (err: AxiosError) => {
             return Promise.reject(err);
