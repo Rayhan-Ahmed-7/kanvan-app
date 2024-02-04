@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack, TextField } from "@mui/material";
+import { Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import useAuth from "../hooks/useAuth";
 import { DataStatus } from "../../../../utils/types";
@@ -36,51 +36,61 @@ const Login = () => {
                     onSubmit={handleSubmit}
                     noValidate
                 >
-                    <InputLabel htmlFor="username">Username</InputLabel>
-                    <OutlinedInput
-                        id="username"
-                        type="text"
-                        value={values.username}
-                        name="username"
-                        onChange={handleChange}
-                        placeholder="Enter username"
-                        fullWidth
-                        error={Boolean(touched.username && errors.username)}
-                    />
-                    {touched.username && errors.username && (
-                        <FormHelperText error>
-                            {errors.username}
-                        </FormHelperText>
-                    )}
-                    <InputLabel>password</InputLabel>
-                    <OutlinedInput
-                        fullWidth
-                        id="password"
-                        name="password"
-                        disabled={dataStatus == DataStatus.loading ? true : false}
-                        onChange={handleChange}
-                        value={values.password}
-                        type={showPassword ? "text" : "password"}
-                        endAdornment={
-                            <IconButton
-                                edge="end"
-                                onClick={handleShowPassword}
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        }
-                        error={Boolean(touched.password && errors.password)}
-                    />
-                    {touched.password && errors.password && (
-                        <FormHelperText sx={{ marginLeft: 'none !important' }} error>
-                            {errors.password}
-                        </FormHelperText>
-                    )}
+                    <Grid container spacing={1}>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor="username">Username</InputLabel>
+                                <OutlinedInput
+                                    id="username"
+                                    type="text"
+                                    value={values.username}
+                                    name="username"
+                                    onChange={handleChange}
+                                    placeholder="Enter username"
+                                    fullWidth
+                                    error={Boolean(touched.username && errors.username)}
+                                />
+                                {touched.username && errors.username && (
+                                    <FormHelperText error>
+                                        {errors.username}
+                                    </FormHelperText>
+                                )}
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>
+                                <InputLabel>password</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    id="password"
+                                    name="password"
+                                    disabled={dataStatus == DataStatus.loading ? true : false}
+                                    onChange={handleChange}
+                                    value={values.password}
+                                    type={showPassword ? "text" : "password"}
+                                    endAdornment={
+                                        <IconButton
+                                            edge="end"
+                                            onClick={handleShowPassword}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    }
+                                    error={Boolean(touched.password && errors.password)}
+                                />
+                                {touched.password && errors.password && (
+                                    <FormHelperText sx={{ marginLeft: 'none !important' }} error>
+                                        {errors.password}
+                                    </FormHelperText>
+                                )}
+                            </Stack>
+                        </Grid>
+                    </Grid>
                     <LoadingButton
                         sx={{ mt: 3, mb: 2 }}
                         variant="outlined"
                         fullWidth
-                        color="success"
+                        color="primary"
                         type="submit"
                         loading={dataStatus == DataStatus.loading ? true : false}
                     >

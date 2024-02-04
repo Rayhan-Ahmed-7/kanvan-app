@@ -11,7 +11,10 @@ import Board from './views/feature/board/views/Board';
 function App() {
   new AxiosService().init()
   const theme = createTheme({
-    palette: { mode: "dark" }
+    palette: { mode: "dark" },
+    shape: {
+      borderRadius: 8
+    }
   })
   return (
     <ThemeProvider theme={theme}>
@@ -19,13 +22,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<AuthLayout />}>
-            <Route path='login' element={<Login />}/>
-            <Route path='register' element={<Register/>}/>
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
           </Route>
           <Route path='/' element={<AppLayout />}>
-            <Route index element={<Home />}/>
-            <Route path='boards' element={<Home />}/>
-            <Route path='boards/:boardId' element={<Board/>}/>
+            <Route index element={<Home />} />
+            <Route path='boards' element={<Home />} />
+            <Route path='boards/:boardId' element={<Board />} />
           </Route>
         </Routes>
       </BrowserRouter>

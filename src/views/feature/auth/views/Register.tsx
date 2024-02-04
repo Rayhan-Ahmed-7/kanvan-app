@@ -12,7 +12,7 @@ import { Formik } from "formik";
 const registerValidation: yup.ObjectSchema<TRegister> = yup.object({
     username: yup.string().required("username is required."),
     password: yup.string().min(8, 'password must be at least 8 characters.').required("password is required."),
-    confirmPassword: yup.string().min(8, 'password must be at least 8 characters.').required("confirm password is required.").test({ name: "passwords-match", message: "password didn't matched.", test: function (value) { return value === this.parent.password } }),
+    confirmPassword: yup.string().min(8, 'password must be at least 8 characters.').required("confirm password is required.").test({ name: "passwords-match", message: "password didn't matched.", test: function (value,context) { return value === context.parent.password } }),
 })
 const Register = () => {
     const { dataStatus, register, showPassword, handleShowPassword, showConfirmPassword, handleShowConfirmPassword } = useAuth();
@@ -118,7 +118,7 @@ const Register = () => {
                         sx={{ mt: 3, mb: 2 }}
                         variant="outlined"
                         fullWidth
-                        color="success"
+                        color="primary"
                         type="submit"
                         loading={dataStatus == DataStatus.loading ? true : false}
                     >
