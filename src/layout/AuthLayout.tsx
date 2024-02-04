@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { Box, Container } from "@mui/material";
+import { Box, Card, Container } from "@mui/material";
 import assets from "../assets";
 import { useEffect, useState } from "react";
 import authUtils from "../utils/authUtils";
@@ -29,8 +29,10 @@ const AuthLayout = () => {
                 alignItems: 'center',
                 flexDirection: 'column'
             }}>
-                <img src={assets.logo.light} height={100} />
-                <Outlet />
+                <Card>
+                    <img src={assets.logo.light} height={100} />
+                    <Outlet />
+                </Card>
             </Box>
         </Container>
     )

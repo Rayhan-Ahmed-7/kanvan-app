@@ -8,8 +8,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Formik } from "formik"
 import * as yup from 'yup'
 import { TLogin } from "../types/authTypes";
-import useTheme from "../../../../hooks/useTheme";
-import { ThemeMode } from "../../../../theme/types/themeMode";
 
 const loginValidation: yup.ObjectSchema<TLogin> = yup.object({
     username: yup.string().required("username is required."),

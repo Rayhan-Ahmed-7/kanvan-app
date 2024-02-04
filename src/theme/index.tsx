@@ -2,10 +2,10 @@ import { CssBaseline, PaletteMode, StyledEngineProvider, ThemeOptions, ThemeProv
 import { ReactNode, useMemo } from "react";
 import getWindowScheme from "../utils/theme_mode";
 import { ThemeMode } from "./types/themeMode";
-import useTheme from "../hooks/useTheme";
+import useThemeConfig from "../hooks/useThemeConfig";
 
 const AppTheme = ({ children }: { children: ReactNode }) => {
-    const { mode } = useTheme();
+    const { mode } = useThemeConfig();
     let themeMode = mode;
     if (themeMode === ThemeMode.AUTO) {
         const autoMode = getWindowScheme();
