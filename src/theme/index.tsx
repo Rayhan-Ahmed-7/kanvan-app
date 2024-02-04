@@ -4,6 +4,7 @@ import getWindowScheme from "../utils/theme_mode";
 import { ThemeMode } from "./types/themeMode";
 import useThemeConfig from "../hooks/useThemeConfig";
 import Palette from "./palette";
+import ComponentsOverride from "./overrides";
 
 const AppTheme = ({ children }: { children: ReactNode }) => {
     const { mode, presetColor, themeContrast } = useThemeConfig();
@@ -24,7 +25,8 @@ const AppTheme = ({ children }: { children: ReactNode }) => {
             borderRadius: 8
         }
     }), [mode])
-    const themes = createTheme(themeOptions)
+    const themes = createTheme(themeOptions);
+    themes.components = ComponentsOverride(theme);
     return (
         <StyledEngineProvider injectFirst={true}>
             <ThemeProvider theme={themes}>

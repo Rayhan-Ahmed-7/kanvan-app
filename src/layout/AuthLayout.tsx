@@ -23,12 +23,12 @@ const AuthLayout = () => {
     return loading ? (
         <Loading fullHeight />
     ) : (
-        <Container component='main' maxWidth='xs'>
+        <Container component='main'>
             <Box sx={{
-                marginTop: 8,
+                height:'100vh',
                 display: 'flex',
                 alignItems: 'center',
-                flexDirection: 'column'
+                justifyContent:'center',
             }}>
                 <Card sx={{
                     padding:3,

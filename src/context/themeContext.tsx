@@ -8,7 +8,7 @@ interface ThemeProps {
     themeContrast: boolean;
 }
 const initialState: ThemeProps = {
-    mode: ThemeMode.AUTO,
+    mode: ThemeMode.DARK,
     presetColor: 'default',
     onChangeMode: () => { },
     themeContrast: false
