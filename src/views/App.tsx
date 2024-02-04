@@ -8,26 +8,32 @@ import Home from './feature/home/views/Home';
 import Board from './feature/board/views/Board';
 import AppTheme from '../theme';
 import ThemeProvider from '../context/themeContext';
+import Snackbar from '../components/Snackbar';
+import { Provider } from 'react-redux';
+import { store } from '../store';
 function App() {
   new AxiosService().init()
   return (
-    <ThemeProvider>
-      <AppTheme>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<AuthLayout />}>
-              <Route path='login' element={<Login />} />
-              <Route path='register' element={<Register />} />
-            </Route>
-            <Route path='/' element={<AppLayout />}>
-              <Route index element={<Home />} />
-              <Route path='boards' element={<Home />} />
-              <Route path='boards/:boardId' element={<Board />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </AppTheme>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <AppTheme>
+          <Snackbar />
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<AuthLayout />}>
+                <Route path='login' element={<Login />} />
+                <Route path='register' element={<Register />} />
+              </Route>
+              <Route path='/' element={<AppLayout />}>
+                <Route index element={<Home />} />
+                <Route path='boards' element={<Home />} />
+                <Route path='boards/:boardId' element={<Board />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </AppTheme>
+      </ThemeProvider>
+    </Provider>
   )
 }
 

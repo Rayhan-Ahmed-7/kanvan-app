@@ -4,6 +4,7 @@ const initialState: SnackbarProps = {
     action: false,
     open: false,
     message: 'Note archived',
+    type: 'default',
     duration: 1000,
     anchorOrigin: {
         vertical: 'top',
@@ -25,6 +26,8 @@ const snackbar = createSlice({
             const { message, type, duration } = action.payload;
             state.open = true;
             state.message = message;
+            state.type = type;
+            state.duration = duration;
         },
         closeSnackbar: (state) => {
             state.open = false;

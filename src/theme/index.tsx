@@ -1,11 +1,12 @@
-import { CssBaseline, PaletteMode, StyledEngineProvider, ThemeOptions, ThemeProvider, createTheme } from "@mui/material";
+import { CssBaseline, StyledEngineProvider, Theme, ThemeOptions, ThemeProvider, createTheme } from "@mui/material";
 import { ReactNode, useMemo } from "react";
 import getWindowScheme from "../utils/theme_mode";
 import { ThemeMode } from "./types/themeMode";
 import useThemeConfig from "../hooks/useThemeConfig";
+import Palette from "./palette";
 
 const AppTheme = ({ children }: { children: ReactNode }) => {
-    const { mode } = useThemeConfig();
+    const { mode, presetColor, themeContrast } = useThemeConfig();
     let themeMode = mode;
     if (themeMode === ThemeMode.AUTO) {
         const autoMode = getWindowScheme();
@@ -16,16 +17,17 @@ const AppTheme = ({ children }: { children: ReactNode }) => {
             themeMode = ThemeMode.LIGHT;
         }
     }
+    const theme: Theme = useMemo<Theme>(() => Palette(themeMode, presetColor, themeContrast), [themeMode, presetColor, themeContrast]);
     const themeOptions: ThemeOptions = useMemo(() => ({
-        palette: { mode: themeMode as PaletteMode, },
+        palette: theme.palette,
         shape: {
             borderRadius: 8
         }
     }), [mode])
-    const theme = createTheme(themeOptions)
+    const themes = createTheme(themeOptions)
     return (
         <StyledEngineProvider injectFirst={true}>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={themes}>
                 <CssBaseline />
                 {children}
             </ThemeProvider>

@@ -1,12 +1,17 @@
 import { ReactNode, createContext, useState } from "react";
 import { ThemeMode } from "../theme/types/themeMode";
+import { PresetColor } from "../theme/types/theme";
 interface ThemeProps {
-    mode: ThemeMode
-    onChangeMode: (mode: ThemeMode) => void
+    mode: ThemeMode;
+    presetColor: PresetColor;
+    onChangeMode: (mode: ThemeMode) => void;
+    themeContrast: boolean;
 }
 const initialState: ThemeProps = {
     mode: ThemeMode.AUTO,
-    onChangeMode: () => { }
+    presetColor: 'default',
+    onChangeMode: () => { },
+    themeContrast: false
 }
 export const ThemeContext = createContext(initialState);
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
