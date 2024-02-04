@@ -36,92 +36,94 @@ const Register = () => {
                     onSubmit={handleSubmit}
                     noValidate
                 >
-                    <Grid item xs={12}>
-                        <Stack spacing={1}>
-                            <InputLabel htmlFor='username'>Username</InputLabel>
-                            <OutlinedInput
-                                fullWidth
-                                required
-                                onChange={handleChange}
-                                value={values.username}
-                                error={Boolean(errors.username && touched.username)}
-                                disabled={dataStatus == DataStatus.loading ? true : false}
-                                id="username"
-                                name="username"
-                            />
-                        </Stack>
-                        {
-                            errors.username && touched.username && (
-                                <FormHelperText error>
-                                    {errors.username}
-                                </FormHelperText>
-                            )
-                        }
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Stack spacing={1}>
-                            <InputLabel htmlFor="password">password</InputLabel>
-                            <OutlinedInput
-                                fullWidth
-                                id="password"
-                                name="password"
-                                onChange={handleChange}
-                                value={values.password}
-                                error={Boolean(errors.password && touched.password)}
-                                type={showPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={handleShowPassword}
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor='username'>Username</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    required
+                                    onChange={handleChange}
+                                    value={values.username}
+                                    error={Boolean(errors.username && touched.username)}
+                                    disabled={dataStatus == DataStatus.loading ? true : false}
+                                    id="username"
+                                    name="username"
+                                />
+                                {
+                                    errors.username && touched.username && (
+                                        <FormHelperText error>
+                                            {errors.username}
+                                        </FormHelperText>
+                                    )
                                 }
-                            />
-                        </Stack>
-                        {
-                            errors.password && touched.password && (
-                                <FormHelperText error>
-                                    {errors.password}
-                                </FormHelperText>
-                            )
-                        }
-                    </Grid>
-                    <Grid item xs={12}>
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor="password">password</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    id="password"
+                                    name="password"
+                                    onChange={handleChange}
+                                    value={values.password}
+                                    error={Boolean(errors.password && touched.password)}
+                                    type={showPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleShowPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                                {
+                                    errors.password && touched.password && (
+                                        <FormHelperText error>
+                                            {errors.password}
+                                        </FormHelperText>
+                                    )
+                                }
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
 
-                        <Stack spacing={1}>
-                            <InputLabel htmlFor="confirmPassword">confirm password</InputLabel>
-                            <OutlinedInput
-                                fullWidth
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                error={Boolean(errors.confirmPassword && touched.confirmPassword)}
-                                onChange={handleChange}
-                                value={values.confirmPassword}
-                                type={showConfirmPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            sx={{ borderRadius: 8 }}
-                                            onClick={handleShowConfirmPassword}
-                                            edge="end"
-                                        >
-                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor="confirmPassword">confirm password</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    error={Boolean(errors.confirmPassword && touched.confirmPassword)}
+                                    onChange={handleChange}
+                                    value={values.confirmPassword}
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                sx={{ borderRadius: 8 }}
+                                                onClick={handleShowConfirmPassword}
+                                                edge="end"
+                                            >
+                                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                                {
+                                    errors.confirmPassword && touched.confirmPassword && (
+                                        <FormHelperText error>
+                                            {errors.confirmPassword}
+                                        </FormHelperText>
+                                    )
                                 }
-                            />
-                        </Stack>
-                        {
-                            errors.confirmPassword && touched.confirmPassword && (
-                                <FormHelperText error>
-                                    {errors.confirmPassword}
-                                </FormHelperText>
-                            )
-                        }
-                    </Grid >
+                            </Stack>
+                        </Grid >
+                    </Grid>
                     <LoadingButton
                         sx={{ mt: 3, mb: 2 }}
                         variant="outlined"
@@ -133,7 +135,6 @@ const Register = () => {
                         Register
                     </LoadingButton>
                     <Stack alignItems='center'>
-
                         <Typography
                             component={Link}
                             to='/login'
