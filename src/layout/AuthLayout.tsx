@@ -4,6 +4,7 @@ import assets from "../assets";
 import { useEffect, useState } from "react";
 import authUtils from "../utils/authUtils";
 import Loading from "../components/common/Loading";
+import AuthBackground from "../views/feature/auth/views/AuthBackground";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
@@ -30,6 +31,7 @@ const AuthLayout = () => {
                 alignItems: 'center',
                 justifyContent:'center',
             }}>
+                <AuthBackground/>
                 <Card sx={{
                     padding:3,
                     border: '1px solid',

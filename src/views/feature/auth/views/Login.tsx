@@ -91,7 +91,7 @@ const Login = () => {
                     </Grid>
                     <LoadingButton
                         sx={{ mt: 3, mb: 2 }}
-                        variant="outlined"
+                        variant="contained"
                         fullWidth
                         color="primary"
                         type="submit"
