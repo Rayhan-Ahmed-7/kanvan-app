@@ -17,7 +17,7 @@ const AppTheme = ({ children }: { children: ReactNode }) => {
         }
     }
     const themeOptions: ThemeOptions = useMemo(() => ({
-        palette: { mode: themeMode as PaletteMode },
+        palette: { mode: themeMode as PaletteMode, },
         shape: {
             borderRadius: 8
         }
