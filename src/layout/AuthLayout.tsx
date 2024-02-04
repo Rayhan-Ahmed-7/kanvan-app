@@ -29,7 +29,7 @@ const AuthLayout = () => {
                 alignItems: 'center',
                 flexDirection: 'column'
             }}>
-                <Card>
+                <Card sx={{padding:4,border:"1px solid",width:{xs:400,md:480}}}>
                     <img src={assets.logo.light} height={100} />
                     <Outlet />
                 </Card>

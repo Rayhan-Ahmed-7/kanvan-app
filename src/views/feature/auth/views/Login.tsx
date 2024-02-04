@@ -1,4 +1,4 @@
-import { Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack } from "@mui/material";
+import { Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import useAuth from "../hooks/useAuth";
 import { DataStatus } from "../../../../utils/types";
@@ -96,9 +96,17 @@ const Login = () => {
                     >
                         Login
                     </LoadingButton>
-                    <Button component={Link} to={'/register'} sx={{ textTransform: 'none', textAlign: "center" }}>
-                        Don't have an account? Register
-                    </Button>
+                    <Stack alignItems='center'>
+                        <Typography
+                            component={Link}
+                            to={'/register'}
+                            sx={{ textDecoration: 'none' }}
+                            color={"primary"}
+                        >
+                            Don&apos;t have an account? Register
+
+                        </Typography>
+                    </Stack>
                 </Box>
             )}
         </Formik>
