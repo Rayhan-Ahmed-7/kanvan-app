@@ -1,8 +1,12 @@
 import { ReactNode, createContext, useState } from "react";
 import { ThemeMode } from "../theme/types/themeMode";
-const initialState = {
-    mode: ThemeMode.LIGHT,
-    onChangeMode: (mode: ThemeMode) => {}
+interface ThemeProps {
+    mode: ThemeMode
+    onChangeMode: (mode: ThemeMode) => void
+}
+const initialState: ThemeProps = {
+    mode: ThemeMode.AUTO,
+    onChangeMode: () => { }
 }
 export const ThemeContext = createContext(initialState);
 const ThemeProvider = ({ children }: { children: ReactNode }) => {

@@ -8,6 +8,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Formik } from "formik"
 import * as yup from 'yup'
 import { TLogin } from "../types/authTypes";
+import useTheme from "../../../../hooks/useTheme";
+import { ThemeMode } from "../../../../theme/types/themeMode";
 
 const loginValidation: yup.ObjectSchema<TLogin> = yup.object({
     username: yup.string().required("username is required."),
@@ -16,7 +18,6 @@ const loginValidation: yup.ObjectSchema<TLogin> = yup.object({
 
 const Login = () => {
     const { dataStatus, login, showPassword, handleShowPassword } = useAuth();
-
     const handleSubmit = (values: TLogin) => {
         login(values);
     }
@@ -64,6 +65,7 @@ const Login = () => {
                                     fullWidth
                                     id="password"
                                     name="password"
+                                    placeholder="enter your password"
                                     disabled={dataStatus == DataStatus.loading ? true : false}
                                     onChange={handleChange}
                                     value={values.password}
