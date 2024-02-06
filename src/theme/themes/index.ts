@@ -7,7 +7,7 @@ import Default from './default';
 
 // ==============================|| PRESET THEME - THEME SELECTOR ||============================== //
 
-const Theme = (presetColor: PresetColor, mode: ThemeMode): PaletteThemeProps => {
+const ThemeOption = (presetColor: PresetColor, mode: ThemeMode): PaletteThemeProps => {
     switch (presetColor) {
         // case 'theme1':
         //   return Theme1(mode);
@@ -16,4 +16,4 @@ const Theme = (presetColor: PresetColor, mode: ThemeMode): PaletteThemeProps => 
     }
 };
 
-export default Theme;
+export default ThemeOption;

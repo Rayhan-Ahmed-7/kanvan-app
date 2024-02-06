@@ -11,7 +11,6 @@ const AppTheme = ({ children }: { children: ReactNode }) => {
     let themeMode = mode;
     if (themeMode === ThemeMode.AUTO) {
         const autoMode = getWindowScheme();
-        console.log(autoMode)
         if (autoMode) {
             themeMode = ThemeMode.DARK;
         } else {
