@@ -5,7 +5,7 @@ const Sidebar = () => {
     console.log(user.username)
     return (
         <div>
-
+            sidebar
         </div>
     );
 };

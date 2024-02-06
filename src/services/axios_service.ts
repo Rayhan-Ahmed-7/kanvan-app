@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import LocalStorageService from "./ localStorageService";
 
 class AxiosService {
@@ -18,16 +18,39 @@ class AxiosService {
         });
         AxiosService.client.interceptors.response.use((res: AxiosResponse) => {
             return res;
-        }, (err: AxiosError) => {
+        }, async (err: AxiosError) => {
+            if (err.response?.status == 401) {
+                try {
+                    let res = await this.getRefreshToken();
+                    LocalStorageService.setAccessToken(res.data?.data?.access_token);
+                    if (err.config && err.config.headers && res.data && res.data.data && res.data.data.access_token) {
+                        err.config.headers.Authorization = `b ${res.data.data.access_token}`;
+                    }
+                    // Return the modified config to continue with the request
+                    return axios(err.config!);
+                } catch (refreshTokenError) {
+                    // Handle refreshTokenError
+                    return Promise.reject(refreshTokenError);
+                }
+            }
             return Promise.reject(err)
         });
         console.log("🍉 AxiosService initialized!")
     }
-    static get = (url: string, data?: object) => {
-        return this.client.get(url, data);
+    static get = (url: string, data?: object,) => {
+        return this.client.get(url, {
+            data: data,
+            withCredentials: true
+        });
     }
-    static post = (url: string, data: object, options?: object) => {
-        return this.client.post(url, data, options);
+    static post = (url: string, data: object, options?: AxiosRequestConfig) => {
+        return this.client.post(url, data, {
+            ...options,
+            withCredentials: true
+        });
+    }
+    getRefreshToken = async () => {
+        return axios.get(import.meta.env.VITE_API_URL + 'auth/refresh-token', { withCredentials: true });
     }
 }
 export default AxiosService;

@@ -4,6 +4,8 @@ import authUtils from "../utils/authUtils";
 import Loading from "../components/common/Loading";
 import { Box } from "@mui/material";
 import Sidebar from "../components/common/Sidebar";
+import { dispatch } from "../store";
+import { addUser } from "../store/reducer/userSlice";
 
 const AppLayout = () => {
     const navigate = useNavigate();
@@ -15,6 +17,7 @@ const AppLayout = () => {
                 navigate('/login');
                 setLoading(false);
             } else {
+                dispatch(addUser(user?.data?.data))
                 setLoading(false)
             }
         }

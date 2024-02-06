@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import authUtils from "../utils/authUtils";
 import Loading from "../components/common/Loading";
 import AuthBackground from "../views/feature/auth/views/AuthBackground";
+import { dispatch } from "../store";
+import { addUser } from "../store/reducer/userSlice";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
@@ -15,6 +17,7 @@ const AuthLayout = () => {
             if (!user) {
                 setLoading(false);
             } else {
+                dispatch(addUser(user?.data?.data))
                 navigate('/');
             }
         }
