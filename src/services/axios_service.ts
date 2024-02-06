@@ -1,11 +1,11 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import LocalStorageService from "./ localStorageService";
-
+const baseUrl = import.meta.env.VITE_API_URL
 class AxiosService {
     static client: AxiosInstance;
     init() {
         AxiosService.client = axios.create({
-            baseURL: import.meta.env.VITE_API_URL,
+            baseURL: baseUrl,
             headers: {
                 "Content-Type": "application/json"
             },
@@ -50,7 +50,7 @@ class AxiosService {
         });
     }
     getRefreshToken = async () => {
-        return axios.get(import.meta.env.VITE_API_URL + 'auth/refresh-token', { withCredentials: true });
+        return axios.get(baseUrl + 'auth/refresh-token', { withCredentials: true });
     }
 }
 export default AxiosService;
