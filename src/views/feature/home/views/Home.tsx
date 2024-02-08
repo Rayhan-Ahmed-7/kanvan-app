@@ -1,9 +1,22 @@
+import { LoadingButton } from "@mui/lab";
+import { Box } from "@mui/material";
 
 const Home = () => {
     return (
-        <div>
-            Home
-        </div>
+        <Box
+        sx={{
+            height:'100%',
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'center'
+        }}
+        >
+            <LoadingButton
+            variant="outlined"
+            >
+                click here to create your first board
+            </LoadingButton>
+        </Box>
     );
 };
 

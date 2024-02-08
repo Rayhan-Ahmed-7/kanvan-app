@@ -3,22 +3,26 @@ import { useSelector } from "../../store";
 import { AddBoxOutlined, LogoutOutlined } from "@mui/icons-material";
 import LocalStorageService from "../../services/ localStorageService";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Sidebar = () => {
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
+    useEffect(()=>{
+
+    },[])
     const logOut = () => {
         LocalStorageService.removeAccessToken();
         navigate('/login');
     }
     return (
         <Drawer
-            // container={window.document.body}
-            open={false}
+            container={window.document.body}
+            open={true}
             variant="permanent"
             sx={{
                 width: 250,
-                height: "100%"
+                height: "100vh"
             }}
         >
             <List
