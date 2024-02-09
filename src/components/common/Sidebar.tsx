@@ -9,14 +9,13 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const { getBoards, activeIndex, onDragEnd } = useBoard();
+    const { getBoards, activeIndex, onDragEnd, createBoard } = useBoard();
     const boards = useSelector(state => state.board);
     const user = useSelector(state => state.user);
 
     useEffect(() => {
         getBoards();
     }, [])
-
 
 
     const logOut = () => {
@@ -86,7 +85,7 @@ const Sidebar = () => {
                         <Typography variant="body2" fontWeight={700} color='white'>
                             private
                         </Typography>
-                        <IconButton>
+                        <IconButton onClick={() => createBoard({ userId: '' })}>
                             <AddBoxOutlined fontSize="small" />
                         </IconButton>
                     </Box>

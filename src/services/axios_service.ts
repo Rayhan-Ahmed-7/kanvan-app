@@ -50,7 +50,7 @@ class AxiosService {
         });
     }
     static put = (url: string, data: object, options?: AxiosRequestConfig) => {
-        return this.client.post(url, data, {
+        return this.client.put(url, data, {
             ...options,
             withCredentials: true
         });
