@@ -1,13 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-interface Board {
+import { IBoard } from "../../views/feature/board/types";
 
-}
-const initialState: Board[] = [];
+const initialState: IBoard[] = [];
 const boardSlice = createSlice({
     name: 'board',
     initialState,
     reducers: {
-        setBoards: (_, action: PayloadAction<Board[]>) => {
+        setBoards: (_, action: PayloadAction<IBoard[]>) => {
             return action.payload;
         }
     }

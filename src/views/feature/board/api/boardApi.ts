@@ -1,8 +1,8 @@
 import AxiosService from "../../../../services/axios_service";
 
 class BoardAPI {
-    private board: string = 'create-board';
-    private boards: string = 'get-boards';
+    private board: string = 'board/create-board';
+    private boards: string = 'board/get-boards';
 
     createBoard = async ({ userId }: { userId: string }) => {
         return AxiosService.post(this.board, { userId: userId });

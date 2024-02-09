@@ -19,6 +19,7 @@
         "@mui/lab": "^5.0.0-alpha.162",
         "@mui/material": "^5.15.6",
         "@reduxjs/toolkit": "^2.1.0",
+        "@types/react-beautiful-dnd": "^13.1.8",
         "axios": "^1.6.7",
         "emoji-mart": "^5.5.2",
         "formik": "^2.4.5",
