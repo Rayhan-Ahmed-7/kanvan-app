@@ -9,19 +9,16 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const { getBoards, activeIndex, updateActive } = useBoard();
+    const { getBoards, activeIndex, onDragEnd } = useBoard();
     const boards = useSelector(state => state.board);
     const user = useSelector(state => state.user);
+
     useEffect(() => {
         getBoards();
     }, [])
 
-    useEffect(() => {
-        updateActive(boards)
-    })
-    const onDragEnd = () => {
 
-    }
+
     const logOut = () => {
         LocalStorageService.removeAccessToken();
         navigate('/login');
@@ -95,7 +92,7 @@ const Sidebar = () => {
                     </Box>
                 </ListItem>
                 <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable key={'list-board-droppable'} droppableId={'list-board-droppable'}>
+                    <Droppable key={'list-board-droppable-key'} droppableId={'list-board-droppable'}>
                         {(provided) => (
                             <div ref={provided.innerRef} {...provided.droppableProps}>
                                 {
@@ -103,19 +100,30 @@ const Sidebar = () => {
                                         <Draggable key={item.id} draggableId={item.id} index={index}>
                                             {(provided, snapshot) => (
                                                 <ListItemButton
-                                                    LinkComponent={Link}
                                                     ref={provided.innerRef}
                                                     {...provided.dragHandleProps}
                                                     {...provided.draggableProps}
                                                     selected={index == activeIndex}
-
+                                                    component={Link}
+                                                    to={`boards/${item.id}`}
+                                                    sx={{
+                                                        pl: '20px',
+                                                        cursor: snapshot.isDragging ? 'grab' : 'pointer!important'
+                                                    }}
                                                 >
-
+                                                    <Typography
+                                                        variant="body2"
+                                                        fontWeight='700'
+                                                        sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                                                    >
+                                                        {item.icon} {item.title}
+                                                    </Typography>
                                                 </ListItemButton>
                                             )}
                                         </Draggable>
                                     ))
                                 }
+                                {provided.placeholder}
                             </div>
                         )}
                     </Droppable>

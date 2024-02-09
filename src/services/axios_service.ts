@@ -49,6 +49,12 @@ class AxiosService {
             withCredentials: true
         });
     }
+    static put = (url: string, data: object, options?: AxiosRequestConfig) => {
+        return this.client.post(url, data, {
+            ...options,
+            withCredentials: true
+        });
+    }
     getRefreshToken = async () => {
         return axios.get(baseUrl + 'auth/refresh-token', { withCredentials: true });
     }
