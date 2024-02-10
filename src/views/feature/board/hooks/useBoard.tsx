@@ -10,17 +10,20 @@ const useBoard = () => {
     const boardApi = new BoardAPI();
     const navigate = useNavigate();
     const { boardId } = useParams();
-    console.log(boardId);
     const [activeIndex, setActiveIndex] = useState(0);
     const [loading, setLoading] = useState(DataStatus.idle);
     const boards = useSelector(state => state.board);
-
     useEffect(() => {
-        updateActive(boards)
-        if (boards.length > 0 && boardId != 'undefined') {
-            navigate(`/boards/${boardId}`)
+        getBoards();
+    }, [])
+    useEffect(() => {
+        const activeItem = boards.findIndex(e => e.id === boardId)
+        if (boards.length > 0 && !boardId) {
+            navigate(`/boards/${boards?.[0].id}`)
         }
+        setActiveIndex(activeItem)
     }, [boards, boardId, navigate])
+
     const createBoard = async ({ userId }: { userId: string }) => {
         try {
             setLoading(DataStatus.loading)
@@ -34,6 +37,7 @@ const useBoard = () => {
             setLoading(DataStatus.error)
         }
     }
+
     const getBoards = async () => {
         try {
             setLoading(DataStatus.loading)
@@ -45,10 +49,13 @@ const useBoard = () => {
             setLoading(DataStatus.error)
         }
     }
+
+
     const updateActive = (boards: IBoard[]) => {
         const activeIndex = boards.findIndex(e => e.id == boardId);
         setActiveIndex(activeIndex);
     }
+
     const onDragEnd = async ({ source, destination }: any) => {
         console.log(source, destination)
         const newList = [...boards];
@@ -63,7 +70,7 @@ const useBoard = () => {
             console.log(error)
         }
     }
-    return { createBoard, getBoards, loading, activeIndex, updateActive, onDragEnd }
+    return { createBoard, getBoards, loading, activeIndex, setActiveIndex, updateActive, onDragEnd }
 };
 
 export default useBoard;

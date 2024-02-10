@@ -3,25 +3,20 @@ import { useSelector } from "../../store";
 import { AddBoxOutlined, LogoutOutlined } from "@mui/icons-material";
 import LocalStorageService from "../../services/ localStorageService";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import useBoard from "../../views/feature/board/hooks/useBoard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const { getBoards, activeIndex, onDragEnd, createBoard } = useBoard();
+    const { activeIndex, onDragEnd, createBoard } = useBoard();
     const boards = useSelector(state => state.board);
     const user = useSelector(state => state.user);
-
-    useEffect(() => {
-        getBoards();
-    }, [])
-
-
+    
     const logOut = () => {
         LocalStorageService.removeAccessToken();
         navigate('/login');
     }
+
     return (
         <Drawer
             container={window.document.body}
@@ -95,8 +90,8 @@ const Sidebar = () => {
                         {(provided) => (
                             <div ref={provided.innerRef} {...provided.droppableProps}>
                                 {
-                                    boards.map((item, index) => (
-                                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                                    boards?.map((item, index) => (
+                                        <Draggable key={item.id} draggableId={item.id!} index={index}>
                                             {(provided, snapshot) => (
                                                 <ListItemButton
                                                     ref={provided.innerRef}
