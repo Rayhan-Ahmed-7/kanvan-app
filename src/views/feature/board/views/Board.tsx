@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BoardAPI from "../api/boardApi";
-import { useSelector } from "../../../../store";
+import { dispatch, useSelector } from "../../../../store";
 import { IBoard } from "../types";
 import { Box, Button, Divider, IconButton, TextField, Typography } from "@mui/material";
 import { DeleteOutlined, StarBorderOutlined, StarOutlined } from "@mui/icons-material";
 import EmojiPicker from "../../../../components/common/EmojiPicker";
+import { setBoards } from "../../../../store/reducer/boardSlice";
+import { debounce } from "../../../../utils/util";
 
 const Board = () => {
     const { boardId } = useParams();
@@ -34,7 +36,58 @@ const Board = () => {
             }
         }
         getBoard()
-    }, [boardId])
+    }, [boardId]);
+    const selectIcon = async (icon: any) => {
+        let temp = [...boards];
+        const index = temp.findIndex(e => e.id == boardId);
+        temp[index] = { ...temp[index], icon: icon };
+        dispatch(setBoards(temp))
+        setBoard({ ...board, icon: icon });
+        try {
+            await boardApi.updateBoard({ boardId, data: { icon: icon } })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const updateTitle = async (e: any) => {
+        let newTitle = e.target.value;
+        setBoard({ ...board, title: newTitle })
+        let temp = [...boards];
+        const index = temp.findIndex(e => e.id == boardId);
+        temp[index] = { ...temp[index], title: newTitle };
+        dispatch(setBoards(temp))
+        const debounceFunction = debounce(async () => {
+            try {
+                await boardApi.updateBoard({ boardId, data: { title: newTitle } })
+            } catch (error) {
+                console.log(error);
+            }
+        }, 1000);
+        debounceFunction();
+    }
+    const updateDescription = async (e: any) => {
+        let newDescription = e.target.value;
+        setBoard({ ...board, description: newDescription });
+        const debounceFunction = debounce(async () => {
+            try {
+                await boardApi.updateBoard({ boardId, data: { description: newDescription } })
+            } catch (error) {
+                console.log(error);
+            }
+        }, 1000);
+        debounceFunction();
+    }
+    const addFavourite = async () => {
+        setBoard({ ...board, favourite: !board.favourite });
+        const debounceFunction = debounce(async () => {
+            try {
+                await boardApi.updateBoard({ boardId, data: { favourite: !board.favourite } })
+            } catch (error) {
+                console.log(error);
+            }
+        }, 500);
+        debounceFunction();
+    }
     return (
         <>
             <Box sx={{
@@ -43,7 +96,7 @@ const Board = () => {
                 justifyContent: "space-between",
                 width: '100%'
             }}>
-                <IconButton>
+                <IconButton onClick={addFavourite}>
                     {
                         board.favourite ? (
                             <StarOutlined color="warning" />
@@ -60,18 +113,19 @@ const Board = () => {
             </Box>
             <Box sx={{ padding: '10px 50px' }}>
                 <Box>
-                    <EmojiPicker icon={board.icon}/>
+                    <EmojiPicker icon={board.icon} onChange={selectIcon} />
                     <TextField
                         value={board.title}
                         placeholder="Untitled"
                         variant="outlined"
                         fullWidth
+                        onChange={updateTitle}
                         sx={{
                             '& .MuiOutlinedInput-input': { padding: 0 },
                             '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
                             '& .MuiOutlinedInput-root': { fontSize: '2rem', fontWeight: '700' },
                             '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none'
+                                border: 'unset'
                             }
                         }}
                     />
@@ -80,6 +134,7 @@ const Board = () => {
                         placeholder="Add description here"
                         multiline
                         variant="outlined"
+                        onChange={updateDescription}
                         fullWidth
                         sx={{
                             '& .MuiOutlinedInput-input': { padding: 0 },

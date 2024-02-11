@@ -3,8 +3,9 @@ import AxiosService from "../../../../services/axios_service";
 class BoardAPI {
     private addBoard: string = 'board/create-board';
     private boards: string = 'board/get-boards';
+    private favourite: string = 'board/get-favourite-boards';
     private singleBoard: string = 'board/get-board/';
-    private updateSingleBoard: string = 'board/get-board/';
+    private updateSingleBoard: string = 'board/update-board/';
     private update: string = 'board/update-boards';
 
     createBoard = async ({ userId }: { userId: string }) => {
@@ -12,6 +13,9 @@ class BoardAPI {
     }
     getBoards = async () => {
         return AxiosService.get(this.boards);
+    }
+    getFavouriteBoards = async () => {
+        return AxiosService.get(this.favourite);
     }
     getBoard = async ({ boardId }: { boardId?: string }) => {
         return AxiosService.get(this.singleBoard + boardId);

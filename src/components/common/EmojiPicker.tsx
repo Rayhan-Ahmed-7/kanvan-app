@@ -10,7 +10,7 @@ const EmojiPicker = (props: any) => {
         setSelectedEmoji(props.icon)
     }, [props.icon]);
     const selecteEmoji = (e: any) => {
-        setSelectedEmoji(e.native);
+        props.onChange(e.native);
     }
     const showPicker = () => setIsShowPicker(!isShowPicker);
     return (
@@ -29,7 +29,7 @@ const EmojiPicker = (props: any) => {
                 top: '100%',
                 zIndex: '9999'
             }}>
-                <Picker onClickOutside={() => showPicker()} onEmojiSelect={selecteEmoji} />
+                <Picker onClickOutside={() => {}} onEmojiSelect={selecteEmoji} />
             </Box>
         </Box>
     );

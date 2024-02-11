@@ -5,6 +5,7 @@ import LocalStorageService from "../../services/ localStorageService";
 import { Link, useNavigate } from "react-router-dom";
 import useBoard from "../../views/feature/board/hooks/useBoard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import FavouriteList from "./FavouriteList";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -53,20 +54,8 @@ const Sidebar = () => {
                     </Box>
                 </ListItem>
                 <Box paddingTop='10px' />
-                <ListItem>
-                    <Box
-                        sx={{
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <Typography variant="body2" fontWeight={700} color='white'>
-                            Favorites
-                        </Typography>
-                    </Box>
-                </ListItem>
+                <FavouriteList/>
+                
                 <Box paddingTop='10px' />
                 <ListItem>
                     <Box
