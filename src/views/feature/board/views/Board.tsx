@@ -5,6 +5,7 @@ import { useSelector } from "../../../../store";
 import { IBoard } from "../types";
 import { Box, Button, Divider, IconButton, TextField, Typography } from "@mui/material";
 import { DeleteOutlined, StarBorderOutlined, StarOutlined } from "@mui/icons-material";
+import EmojiPicker from "../../../../components/common/EmojiPicker";
 
 const Board = () => {
     const { boardId } = useParams();
@@ -59,7 +60,7 @@ const Board = () => {
             </Box>
             <Box sx={{ padding: '10px 50px' }}>
                 <Box>
-
+                    <EmojiPicker icon={board.icon}/>
                     <TextField
                         value={board.title}
                         placeholder="Untitled"
@@ -70,7 +71,7 @@ const Board = () => {
                             '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
                             '& .MuiOutlinedInput-root': { fontSize: '2rem', fontWeight: '700' },
                             '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'unset'
+                                border: 'none'
                             }
                         }}
                     />
@@ -85,7 +86,7 @@ const Board = () => {
                             '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
                             '& .MuiOutlinedInput-root': { fontSize: '0.8rem', },
                             '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'unset'
+                                border: 'none'
                             }
                         }}
                     />
@@ -99,11 +100,10 @@ const Board = () => {
                         <Button>
                             Add section
                         </Button>
-                        <Typography>
+                        <Typography variant="body2" fontWeight='700'>
                             {
                                 board.sections?.length
-                            }
-                            Sections
+                            } Sections
                         </Typography>
                     </Box>
                     <Divider sx={{ margin: '10px 0' }} />

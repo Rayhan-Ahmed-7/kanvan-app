@@ -4,6 +4,7 @@ class BoardAPI {
     private addBoard: string = 'board/create-board';
     private boards: string = 'board/get-boards';
     private singleBoard: string = 'board/get-board/';
+    private updateSingleBoard: string = 'board/get-board/';
     private update: string = 'board/update-boards';
 
     createBoard = async ({ userId }: { userId: string }) => {
@@ -14,6 +15,9 @@ class BoardAPI {
     }
     getBoard = async ({ boardId }: { boardId?: string }) => {
         return AxiosService.get(this.singleBoard + boardId);
+    }
+    updateBoard = async ({ boardId, data }: { boardId?: string, data: Object }) => {
+        return AxiosService.put(this.updateSingleBoard + boardId, data);
     }
     updateBoards = async (data: any) => {
         return AxiosService.put(this.update, data);
