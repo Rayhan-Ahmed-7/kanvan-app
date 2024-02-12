@@ -26,9 +26,20 @@ const FavouriteList = () => {
         const activeItem = favorites.findIndex(e => e.id === boardId)
 
         setActiveIndex(activeItem)
-    }, [favorites,boardId])
-    const onDragEnd = () => {
-
+    }, [favorites, boardId])
+    const onDragEnd = async ({ source, destination }: any) => {
+        console.log(source, destination)
+        const newList = [...favorites];
+        const [removed] = newList.splice(source.index, 1);
+        newList.splice(destination.index, 0, removed);
+        const activeIndex = newList.findIndex(e => e.id == boardId);
+        setActiveIndex(activeIndex);
+        dispatch(setFavourites(newList));
+        try {
+            await _boardApi.updateFavourites({ boards: newList })
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (
         <>

@@ -4,6 +4,7 @@ class BoardAPI {
     private addBoard: string = 'board/create-board';
     private boards: string = 'board/get-boards';
     private favourite: string = 'board/get-favourite-boards';
+    private favouritePosition: string = 'board/update-favourite-boards';
     private singleBoard: string = 'board/get-board/';
     private updateSingleBoard: string = 'board/update-board/';
     private update: string = 'board/update-boards';
@@ -25,6 +26,9 @@ class BoardAPI {
     }
     updateBoards = async (data: any) => {
         return AxiosService.put(this.update, data);
+    }
+    updateFavourites = async (data: any) => {
+        return AxiosService.put(this.favouritePosition, data);
     }
 }
 

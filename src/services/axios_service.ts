@@ -55,6 +55,12 @@ class AxiosService {
             withCredentials: true
         });
     }
+    static delete = (url: string, options?: AxiosRequestConfig) => {
+        return this.client.delete(url, {
+            ...options,
+            withCredentials: true
+        });
+    }
     getRefreshToken = async () => {
         return axios.get(baseUrl + 'auth/refresh-token', { withCredentials: true });
     }

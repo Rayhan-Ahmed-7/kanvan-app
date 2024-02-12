@@ -8,6 +8,7 @@ import { DeleteOutlined, StarBorderOutlined, StarOutlined } from "@mui/icons-mat
 import EmojiPicker from "../../../../components/common/EmojiPicker";
 import { setBoards } from "../../../../store/reducer/boardSlice";
 import { debounce } from "../../../../utils/util";
+import { setFavourites } from "../../../../store/reducer/favouriteSlice";
 
 const Board = () => {
     const { boardId } = useParams();
@@ -21,7 +22,7 @@ const Board = () => {
     })
 
     const boards = useSelector((state) => state.board)
-    // const favouriteList = useSelector((state) => state.favourites)
+    const favourites = useSelector((state) => state.favourites)
 
     useEffect(() => {
         const getBoard = async () => {
@@ -41,7 +42,12 @@ const Board = () => {
         let temp = [...boards];
         const index = temp.findIndex(e => e.id == boardId);
         temp[index] = { ...temp[index], icon: icon };
-        dispatch(setBoards(temp))
+        dispatch(setBoards(temp));
+        if (board.favourite) {
+            let favouriteTemp = [...favourites];
+            favouriteTemp[index] = { ...favouriteTemp[index], icon: icon }
+            dispatch(setFavourites(favouriteTemp));
+        }
         setBoard({ ...board, icon: icon });
         try {
             await boardApi.updateBoard({ boardId, data: { icon: icon } })
@@ -56,6 +62,11 @@ const Board = () => {
         const index = temp.findIndex(e => e.id == boardId);
         temp[index] = { ...temp[index], title: newTitle };
         dispatch(setBoards(temp))
+        if (board.favourite) {
+            let favouriteTemp = [...favourites];
+            favouriteTemp[index] = { ...favouriteTemp[index], title: newTitle }
+            dispatch(setFavourites(favouriteTemp));
+        }
         const debounceFunction = debounce(async () => {
             try {
                 await boardApi.updateBoard({ boardId, data: { title: newTitle } })
