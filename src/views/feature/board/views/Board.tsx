@@ -9,6 +9,7 @@ import EmojiPicker from "../../../../components/common/EmojiPicker";
 import { setBoards } from "../../../../store/reducer/boardSlice";
 import { debounce } from "../../../../utils/util";
 import { setFavourites } from "../../../../store/reducer/favouriteSlice";
+import Sections from "../../section/views/Sections";
 
 const Board = () => {
     const { boardId } = useParams();
@@ -158,21 +159,7 @@ const Board = () => {
                     />
                 </Box>
                 <Box>
-                    <Box sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}>
-                        <Button>
-                            Add section
-                        </Button>
-                        <Typography variant="body2" fontWeight='700'>
-                            {
-                                board.sections?.length
-                            } Sections
-                        </Typography>
-                    </Box>
-                    <Divider sx={{ margin: '10px 0' }} />
+                    <Sections data={board.sections} boardId={boardId} />
                 </Box>
             </Box>
 
