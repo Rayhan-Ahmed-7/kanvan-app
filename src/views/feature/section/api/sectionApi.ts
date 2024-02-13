@@ -8,10 +8,10 @@ class SectionAPI {
     private sectionUpdate: string = 'section/update/';
     private sectionDelete: string = 'section/delete/';
 
-    createBoard = async ({ boardId }: { boardId: string, }) => {
+    createSection = async ({ boardId }: { boardId: string, }) => {
         return AxiosService.post(this.section + boardId, {});
     }
-    updateBoard = async ({ sectionId, data }: ISectionRequest) => {
+    updateSection = async ({ sectionId, data }: ISectionRequest) => {
         return AxiosService.put(this.sectionUpdate + sectionId, data);
     }
     deleteSection = async ({ sectionId }: { sectionId: string }) => {
