@@ -5,15 +5,19 @@ import SectionAPI from "../api/sectionApi";
 import { AddOutlined, DeleteOutline } from "@mui/icons-material";
 import { debounce } from "../../../../utils/util";
 import TaskAPI from "../../task/api/taskApi";
+import TaskModal from "../../../../components/common/TaskModal";
 interface ISection {
     _id: string,
     title: string,
+    tasks: object[]
 }
 const Sections = (props: any) => {
     const _sectionApi = new SectionAPI();
     const _taskApi = new TaskAPI();
     const boardId = props.boardId
     const [data, setData] = useState<ISection[]>([]);
+    const [selectedTask, setSelectedTask] = useState(null)
+    console.log(selectedTask);
     useEffect(() => {
         setData(props.data)
     }, [props.data]);
@@ -52,12 +56,48 @@ const Sections = (props: any) => {
     const createTask = async (sectionId: string) => {
         try {
             const task = await _taskApi.createTask({ sectionId })
-            
+            const newData = [...data];
+            const index = newData.findIndex((e: any) => e._id == sectionId)
+            newData[index].tasks.unshift(task?.data?.data);
+            setData(newData)
         } catch (error) {
             console.log(error);
         }
     }
-    const onDragEnd = () => {
+    const onDragEnd = async ({ source, destination }: any) => {
+        if (!destination) return;
+        const sourceColIndex = data.findIndex(e => e._id == source.droppableId);
+        const destinationColIndex = data.findIndex(e => e._id == destination.droppableId);
+        const sourceCol = data[sourceColIndex]
+        const destinationCol = data[destinationColIndex]
+
+        const sourceSectionId = sourceCol._id;
+        const destinationSectionId = destinationCol._id;
+
+        const sourceTasks = [...sourceCol.tasks];
+        const destinationTasks = [...destinationCol.tasks];
+
+        if (source.droppableId !== destination.droppableId) {
+            const [removed] = sourceTasks.splice(source.index, 1);
+            destinationTasks.splice(destination.index, 0, removed);
+            data[sourceColIndex].tasks = sourceTasks;
+            data[destinationColIndex].tasks = destinationTasks;
+        }
+        try {
+            await _taskApi.updateTaskPosition({
+                resourceList: sourceTasks,
+                destinationList: destinationTasks,
+                resourceSectionId: sourceSectionId,
+                destinationSectionId: destinationSectionId
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const onUpdateTask = () => {
+
+    }
+    const onDeleteTask = () => {
 
     }
     return (
@@ -88,8 +128,8 @@ const Sections = (props: any) => {
                 }}>
                     {
                         data.map((section: any) => (
-                            <div key={section.id} style={{ width: '300px' }}>
-                                <Droppable key={section.id} droppableId={section.id}>
+                            <div key={section._id} style={{ width: '300px' }}>
+                                <Droppable key={section._id} droppableId={section._id}>
                                     {(provided) => (
                                         <Box
                                             ref={provided.innerRef}
@@ -143,7 +183,7 @@ const Sections = (props: any) => {
                                             </Box>
                                             {
                                                 section?.tasks?.map((task: any, index: number) => (
-                                                    <Draggable key={task.id} draggableId={task.id} index={index}>
+                                                    <Draggable key={task._id} draggableId={task._id} index={index}>
                                                         {(provided, snapshot) => (
                                                             <Card
                                                                 ref={provided.innerRef}
@@ -154,9 +194,10 @@ const Sections = (props: any) => {
                                                                     marginBottom: '10px',
                                                                     cursor: snapshot.isDragging ? 'grab' : 'pointer!important'
                                                                 }}
+                                                                onClick={() => setSelectedTask(task)}
                                                             >
                                                                 <Typography>
-                                                                    {task.title == '' ? 'Untitled' : task.title}
+                                                                    {task.title == '' ? "Untitled" : task.title}
                                                                 </Typography>
                                                             </Card>
                                                         )}
@@ -172,6 +213,13 @@ const Sections = (props: any) => {
                     }
                 </Box>
             </DragDropContext>
+            <TaskModal
+                task={selectedTask}
+                boardId={boardId}
+                onClose={() => setSelectedTask(null)}
+                onUpdate={onUpdateTask}
+                onDelete={onDeleteTask}
+            />
         </>
     );
 };

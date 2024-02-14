@@ -57,7 +57,6 @@ const useBoard = () => {
     }
 
     const onDragEnd = async ({ source, destination }: any) => {
-        console.log(source, destination)
         const newList = [...boards];
         const [removed] = newList.splice(source.index, 1);
         newList.splice(destination.index, 0, removed);

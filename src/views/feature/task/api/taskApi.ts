@@ -15,8 +15,8 @@ class TaskAPI {
     updateTask = async ({ taskId, data }: ITaskRequest) => {
         return AxiosService.put(this.taskUpdate + taskId, data);
     }
-    updateTaskPosition = async ({ taskId, data }: ITaskRequest) => {
-        return AxiosService.put(this.taskPositionUpdate + taskId, data);
+    updateTaskPosition = async (data: object) => {
+        return AxiosService.put(this.taskPositionUpdate, data);
     }
     deleteTask = async ({ taskId }: { taskId: string }) => {
         return AxiosService.delete(this.taskDelete + taskId);
