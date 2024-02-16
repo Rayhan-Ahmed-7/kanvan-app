@@ -2,7 +2,7 @@ import { Box, Button, Card, Divider, IconButton, TextField, Typography } from "@
 import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import SectionAPI from "../api/sectionApi";
-import { AddOutlined, DeleteOutline } from "@mui/icons-material";
+import { AddOutlined, ContentPasteOffSharp, DeleteOutline } from "@mui/icons-material";
 import { debounce } from "../../../../utils/util";
 import TaskAPI from "../../task/api/taskApi";
 import TaskModal from "../../../../components/common/TaskModal";
@@ -16,8 +16,7 @@ const Sections = (props: any) => {
     const _taskApi = new TaskAPI();
     const boardId = props.boardId
     const [data, setData] = useState<ISection[]>([]);
-    const [selectedTask, setSelectedTask] = useState(null)
-    console.log(selectedTask);
+    const [selectedTask, setSelectedTask] = useState('')
     useEffect(() => {
         setData(props.data)
     }, [props.data]);
@@ -94,11 +93,20 @@ const Sections = (props: any) => {
             console.log(error)
         }
     }
-    const onUpdateTask = () => {
-
+    const onUpdateTask = (task: any) => {
+        const newData = [...data];
+        const sectionIndex = newData.findIndex(e => e._id == task?.section?._id);
+        const taskIndex = newData[sectionIndex]?.tasks.findIndex((e: any) => e._id == task?._id);
+        newData[sectionIndex].tasks[taskIndex] = task;
+        // console.log(task,"===========")
+        setData(newData)
     }
-    const onDeleteTask = () => {
-
+    const onDeleteTask = (task: any) => {
+        const newData = [...data];
+        const sectionIndex = newData.findIndex(e => e._id == task?.section?._id);
+        const taskIndex = newData[sectionIndex]?.tasks.findIndex((e: any) => e._id == task?._id);
+        newData[sectionIndex].tasks.splice(taskIndex, 1);
+        setData(newData)
     }
     return (
         <>
@@ -216,7 +224,7 @@ const Sections = (props: any) => {
             <TaskModal
                 task={selectedTask}
                 boardId={boardId}
-                onClose={() => setSelectedTask(null)}
+                onClose={() => setSelectedTask('')}
                 onUpdate={onUpdateTask}
                 onDelete={onDeleteTask}
             />

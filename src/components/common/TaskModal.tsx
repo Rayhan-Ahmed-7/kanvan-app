@@ -3,6 +3,8 @@ import { Backdrop, Box, Divider, Fade, IconButton, Modal, TextField, Typography 
 import { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import TaskAPI from "../../views/feature/task/api/taskApi";
+import { debounce } from "lodash";
 const modalStyle = {
     outline: 'none',
     position: 'absolute',
@@ -18,35 +20,74 @@ const modalStyle = {
 }
 
 const TaskModal = (props: any) => {
-    const boardId = props.boardId;
+    const taskApi = new TaskAPI();
+    // const boardId = props.boardId;
     const [task, setTask] = useState(props?.task);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
     useEffect(() => {
-        setTask(props.task);
-        setTitle(props.task !== undefined ? props.task?.title : '')
-        setContent(props.content !== undefined ? props.task?.content : '')
+        setTask(props.task || '');
+        setTitle(props.task?.title || '')
+        setContent(props.task?.content || '')
     }, [props.task])
-    const updateTaskTitle = (e: any) => {
-
-    }
-    // console.log(props.task)
+    console.log(task, 'global')
     const handleClose = () => {
+        console.log(task, "before")
         props.onUpdate(task);
         props.onClose()
-        console.log(task)
+        console.log(task, "after")
+    }
+    const deleteTask = async () => {
+        try {
+            await taskApi.deleteTask({ taskId: task._id });
+            setTask('');
+            props.onDelete(task)
+        } catch (error) {
+
+        }
+    }
+    const updateTaskTitle = (e: any) => {
+        const newTitle = e.target.value;
+        const debouncedFunction = debounce(async () => {
+            try {
+                await taskApi.updateTask({ taskId: task?._id, data: { title: newTitle } })
+            } catch (error) {
+
+            }
+        }, 1000);
+        debouncedFunction();
+        setTask((prevTask: any) => ({ ...prevTask, title: newTitle }));
+        setTitle(newTitle);
+        props.onUpdate(task)
+    }
+    const updateTaskContent = (e: any, editor: any) => {
+        if (props.task != '') {
+            const data = editor.getData();
+            const debouncedFunction = debounce(async () => {
+                try {
+                    await taskApi.updateTask({ taskId: task?._id, data: { content: data } })
+                } catch (error) {
+                    console.log(error)
+                }
+            }, 1000);
+            // task.content = data;
+            debouncedFunction();
+            setTask((prevTask: any) => ({ ...prevTask, content: data }));
+            setContent(data);
+            props.onUpdate(task)
+        }
     }
     return (
         <Modal
-            open={task == null ? false : true}
+            open={task != ''}
             onClose={handleClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{ timeout: 500 }}
         >
             <Fade
-                in={task !== null}
+                in={task != ''}
             >
                 <Box
                     sx={modalStyle}
@@ -57,7 +98,7 @@ const TaskModal = (props: any) => {
                         justifyContent: 'flex-end',
                         width: '100%'
                     }}>
-                        <IconButton>
+                        <IconButton color="error" onClick={deleteTask}>
                             <DeleteOutline />
                         </IconButton>
                     </Box>
@@ -99,6 +140,7 @@ const TaskModal = (props: any) => {
                             <CKEditor
                                 editor={ClassicEditor}
                                 data={content}
+                                onChange={updateTaskContent}
                             />
                         </Box>
                     </Box>
