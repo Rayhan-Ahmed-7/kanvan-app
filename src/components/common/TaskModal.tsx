@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TaskAPI from "../../views/feature/task/api/taskApi";
-import { debounce } from "lodash";
+import { debounce } from "../../utils/util";
 const modalStyle = {
     outline: 'none',
     position: 'absolute',
@@ -49,6 +49,9 @@ const TaskModal = (props: any) => {
     }
     const updateTaskTitle = (e: any) => {
         const newTitle = e.target.value;
+        setTask((prevTask: any) => ({ ...prevTask, title: newTitle }));
+        setTitle(newTitle);
+        props.onUpdate(task)
         const debouncedFunction = debounce(async () => {
             try {
                 await taskApi.updateTask({ taskId: task?._id, data: { title: newTitle } })
@@ -57,13 +60,13 @@ const TaskModal = (props: any) => {
             }
         }, 1000);
         debouncedFunction();
-        setTask((prevTask: any) => ({ ...prevTask, title: newTitle }));
-        setTitle(newTitle);
-        props.onUpdate(task)
     }
     const updateTaskContent = (e: any, editor: any) => {
         if (props.task != '') {
             const data = editor.getData();
+            setTask((prevTask: any) => ({ ...prevTask, content: data }));
+            setContent(data);
+            props.onUpdate(task)
             const debouncedFunction = debounce(async () => {
                 try {
                     await taskApi.updateTask({ taskId: task?._id, data: { content: data } })
@@ -71,11 +74,7 @@ const TaskModal = (props: any) => {
                     console.log(error)
                 }
             }, 1000);
-            // task.content = data;
             debouncedFunction();
-            setTask((prevTask: any) => ({ ...prevTask, content: data }));
-            setContent(data);
-            props.onUpdate(task)
         }
     }
     return (
