@@ -18,8 +18,11 @@ const useBoard = () => {
     }, [])
     useEffect(() => {
         const activeItem = boards.findIndex(e => e.id === boardId)
-        if (boards.length > 0 && !boardId) {
-            navigate(`/boards/${boards?.[0].id}`)
+        if (boards.length > 0) {
+            navigate(`/boards/${boards?.[0]?.id}`)
+        }
+        if(boards.length == 0){
+            navigate("/boards")
         }
         setActiveIndex(activeItem)
     }, [boards, boardId, navigate])
@@ -45,7 +48,6 @@ const useBoard = () => {
             dispatch(setBoards(response.data?.data))
             setLoading(DataStatus.loaded)
         } catch (error) {
-            console.log(error);
             setLoading(DataStatus.error)
         }
     }

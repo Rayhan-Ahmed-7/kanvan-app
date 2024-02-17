@@ -1,6 +1,6 @@
 import { DeleteOutline } from "@mui/icons-material";
 import { Backdrop, Box, Divider, Fade, IconButton, Modal, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TaskAPI from "../../views/feature/task/api/taskApi";
@@ -25,13 +25,28 @@ const TaskModal = (props: any) => {
     const [task, setTask] = useState(props?.task);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-
+    const boxRef = useRef<HTMLElement>();
     useEffect(() => {
         setTask(props.task || '');
         setTitle(props.task?.title || '')
         setContent(props.task?.content || '')
+        if (props.task != '') {
+            updateEditorHeight()
+        }
     }, [props.task])
-    console.log(task, 'global')
+    const updateEditorHeight = () => {
+        setTimeout(() => {
+            if (boxRef.current) {
+                const box = boxRef.current
+                console.log(box,"box")
+                const editableInline = box.querySelector('.ck-editor__editable_inline') as HTMLElement;
+                if (editableInline) {
+                    console.log(box.offsetHeight,'inline')
+                    editableInline.style.height = (box.offsetHeight - 50) + 'px';
+                }
+            }
+        }, 200)
+    }
     const handleClose = () => {
         console.log(task, "before")
         props.onUpdate(task);
@@ -103,14 +118,14 @@ const TaskModal = (props: any) => {
                     </Box>
                     <Box sx={{
                         display: 'flex',
-                        width: '100%',
+                        height: '100%',
                         flexDirection: 'column',
                         padding: '2rem 5rem 5rem'
                     }}>
                         <TextField
                             value={title}
                             onChange={updateTaskTitle}
-                            placeholder="Untitled"
+                            // placeholder="Untitled"
                             variant="outlined"
                             fullWidth
                             sx={{
@@ -131,15 +146,19 @@ const TaskModal = (props: any) => {
                         </Typography>
                         <Divider sx={{ margin: '1.5rem 0' }} />
                         <Box
+                            ref={boxRef}
                             sx={{
+                                position: 'relative',
                                 height: "80%",
-                                overFlowX: 'hidden',
-                                overFlowY: 'auto'
+                                overflowX: 'hidden',
+                                overflowY: 'auto'
                             }}>
                             <CKEditor
                                 editor={ClassicEditor}
                                 data={content}
                                 onChange={updateTaskContent}
+                                onFocus={updateEditorHeight}
+                                onBlur={updateEditorHeight}
                             />
                         </Box>
                     </Box>

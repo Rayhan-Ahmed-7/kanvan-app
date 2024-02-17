@@ -100,6 +100,14 @@ const Board = () => {
         }, 500);
         debounceFunction();
     }
+    const deleteBoard = async () => {
+        let newBoards = boards.filter((board) => board._id != boardId);
+        let newFavorites = favourites.filter((board) => board._id != boardId);
+        dispatch(setBoards(newBoards))
+        dispatch(setFavourites(newFavorites))
+        // await boardApi.deleteBoard({ boardId })
+
+    }
     return (
         <>
             <Box sx={{
@@ -119,7 +127,7 @@ const Board = () => {
                             )
                     }
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={deleteBoard}>
                     <DeleteOutlined />
                 </IconButton>
             </Box>
