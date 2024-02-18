@@ -8,8 +8,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Formik } from "formik"
 import * as yup from 'yup'
 import { TLogin } from "../types/authTypes";
-import { dispatch } from "../../../../store";
-import { openSnackbar } from "../../../../store/reducer/snackbar";
 
 const loginValidation: yup.ObjectSchema<TLogin> = yup.object({
     username: yup.string().required("username is required."),
@@ -19,7 +17,6 @@ const loginValidation: yup.ObjectSchema<TLogin> = yup.object({
 const Login = () => {
     const { dataStatus, login, showPassword, handleShowPassword } = useAuth();
     const handleSubmit = (values: TLogin) => {
-        dispatch(openSnackbar({ message: 'hi', type: '' }))
         login(values);
     }
     return (

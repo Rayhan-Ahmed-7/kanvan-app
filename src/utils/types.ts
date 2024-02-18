@@ -5,3 +5,4 @@ export enum DataStatus {
     error='error',
     empty='empty'
 }
+

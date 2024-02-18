@@ -1,10 +1,11 @@
-import { SnackbarProps } from "../types/snackbarType";
+import { SnackbarProps, SnackbarType } from "../types/snackbarType";
 import { createSlice } from "@reduxjs/toolkit"
+
 const initialState: SnackbarProps = {
     action: false,
     open: false,
     message: 'Note archived',
-    type: 'default',
+    type: SnackbarType.default,
     duration: 1000,
     anchorOrigin: {
         vertical: 'top',
