@@ -90,6 +90,9 @@ const Board = () => {
         debounceFunction();
     }
     const addFavourite = async () => {
+        let temp = [...favourites];
+
+        // setFavourites()
         setBoard({ ...board, favourite: !board.favourite });
         const debounceFunction = debounce(async () => {
             try {

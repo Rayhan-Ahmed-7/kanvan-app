@@ -18,14 +18,16 @@ const useBoard = () => {
     }, [])
     useEffect(() => {
         const activeItem = boards.findIndex(e => e.id === boardId)
+        setActiveIndex(activeItem)
+    }, [boardId])
+    useEffect(() => {
         if (boards.length > 0) {
             navigate(`/boards/${boards?.[0]?.id}`)
         }
-        if(boards.length == 0){
+        if (boards.length == 0) {
             navigate("/boards")
         }
-        setActiveIndex(activeItem)
-    }, [boards, boardId, navigate])
+    }, [boards])
 
     const createBoard = async ({ userId }: { userId: string }) => {
         try {
