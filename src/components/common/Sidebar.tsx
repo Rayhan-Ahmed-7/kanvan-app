@@ -3,16 +3,15 @@ import { useSelector } from "../../store";
 import { AddBoxOutlined, LogoutOutlined } from "@mui/icons-material";
 import LocalStorageService from "../../services/ localStorageService";
 import { Link, useNavigate } from "react-router-dom";
-import useBoard from "../../views/feature/board/hooks/useBoard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import FavouriteList from "./FavouriteList";
 
-const Sidebar = () => {
+const Sidebar = (props:any) => {
     const navigate = useNavigate();
-    const { activeIndex, onDragEnd, createBoard } = useBoard();
+    const { activeIndex, onDragEnd, createBoard } = props;
     const boards = useSelector(state => state.board);
     const user = useSelector(state => state.user);
-    
+
     const logOut = () => {
         LocalStorageService.removeAccessToken();
         navigate('/login');
@@ -54,8 +53,8 @@ const Sidebar = () => {
                     </Box>
                 </ListItem>
                 <Box paddingTop='10px' />
-                <FavouriteList/>
-                
+                <FavouriteList />
+
                 <Box paddingTop='10px' />
                 <ListItem>
                     <Box

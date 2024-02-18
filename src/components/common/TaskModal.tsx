@@ -38,20 +38,16 @@ const TaskModal = (props: any) => {
         setTimeout(() => {
             if (boxRef.current) {
                 const box = boxRef.current
-                console.log(box,"box")
                 const editableInline = box.querySelector('.ck-editor__editable_inline') as HTMLElement;
                 if (editableInline) {
-                    console.log(box.offsetHeight,'inline')
                     editableInline.style.height = (box.offsetHeight - 50) + 'px';
                 }
             }
         }, 200)
     }
     const handleClose = () => {
-        console.log(task, "before")
         props.onUpdate(task);
         props.onClose()
-        console.log(task, "after")
     }
     const deleteTask = async () => {
         try {
@@ -76,7 +72,7 @@ const TaskModal = (props: any) => {
         }, 1000);
         debouncedFunction();
     }
-    const updateTaskContent = (e: any, editor: any) => {
+    const updateTaskContent = (_e: any, editor: any) => {
         if (props.task != '') {
             const data = editor.getData();
             setTask((prevTask: any) => ({ ...prevTask, content: data }));

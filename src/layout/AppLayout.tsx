@@ -6,8 +6,11 @@ import { Box } from "@mui/material";
 import Sidebar from "../components/common/Sidebar";
 import { dispatch } from "../store";
 import { addUser } from "../store/reducer/userSlice";
+import useBoard from "../views/feature/board/hooks/useBoard";
+import { DataStatus } from "../utils/types";
 
 const AppLayout = () => {
+    const { loading: boardsLoading, activeIndex, onDragEnd, createBoard } = useBoard();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -23,13 +26,17 @@ const AppLayout = () => {
         }
         checkAuth();
     }, [navigate])
-    return loading ? (
+    return loading || boardsLoading == DataStatus.loading ? (
         <Loading fullHeight />
     ) : (
         <Box sx={{
             display: 'flex',
         }}>
-            <Sidebar />
+            <Sidebar
+                activeIndex={activeIndex}
+                onDragEnd={onDragEnd}
+                createBoard={createBoard}
+            />
             <Box sx={{
                 flexGrow: 1,
                 p: 1,
