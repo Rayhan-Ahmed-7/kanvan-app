@@ -120,75 +120,73 @@ const Board = () => {
         await boardApi.deleteBoard({ boardId })
 
     }
-    return (
-        loading == DataStatus.loading ? (
-            <Loading fullHeight />
-        ) :
-            (
-                <>
-                    <Box sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: '100%'
-                    }}>
-                        <IconButton onClick={addFavourite}>
-                            {
-                                board.favourite ? (
-                                    <StarOutlined color="warning" />
-                                )
-                                    :
-                                    (
-                                        <StarBorderOutlined />
-                                    )
-                            }
-                        </IconButton>
-                        <IconButton onClick={deleteBoard}>
-                            <DeleteOutlined />
-                        </IconButton>
-                    </Box>
-                    <Box sx={{ padding: '10px 50px' }}>
-                        <Box>
-                            <EmojiPicker icon={board.icon} onChange={selectIcon} />
-                            <TextField
-                                value={board.title}
-                                placeholder="Untitled"
-                                variant="outlined"
-                                fullWidth
-                                onChange={updateTitle}
-                                sx={{
-                                    '& .MuiOutlinedInput-input': { padding: 0 },
-                                    '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
-                                    '& .MuiOutlinedInput-root': { fontSize: '2rem', fontWeight: '700' },
-                                    '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                        border: 'unset'
-                                    }
-                                }}
-                            />
-                            <TextField
-                                value={board.description}
-                                placeholder="Add description here"
-                                multiline
-                                variant="outlined"
-                                onChange={updateDescription}
-                                fullWidth
-                                sx={{
-                                    '& .MuiOutlinedInput-input': { padding: 0 },
-                                    '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
-                                    '& .MuiOutlinedInput-root': { fontSize: '0.8rem', },
-                                    '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                        border: 'none'
-                                    }
-                                }}
-                            />
-                        </Box>
-                        <Box>
-                            <Sections data={board.sections} boardId={boardId} />
-                        </Box>
-                    </Box>
-                </>
-            )
-    );
+    if (loading == DataStatus.loading) {
+        return <Loading fullHeight />
+    }
+    if(loading == DataStatus.loaded){
+        return <>
+        <Box sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: '100%'
+        }}>
+            <IconButton onClick={addFavourite}>
+                {
+                    board.favourite ? (
+                        <StarOutlined color="warning" />
+                    )
+                        :
+                        (
+                            <StarBorderOutlined />
+                        )
+                }
+            </IconButton>
+            <IconButton onClick={deleteBoard}>
+                <DeleteOutlined />
+            </IconButton>
+        </Box>
+        <Box sx={{ padding: '10px 50px' }}>
+            <Box>
+                <EmojiPicker icon={board.icon} onChange={selectIcon} />
+                <TextField
+                    value={board.title}
+                    placeholder="Untitled"
+                    variant="outlined"
+                    fullWidth
+                    onChange={updateTitle}
+                    sx={{
+                        '& .MuiOutlinedInput-input': { padding: 0 },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
+                        '& .MuiOutlinedInput-root': { fontSize: '2rem', fontWeight: '700' },
+                        '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            border: 'unset'
+                        }
+                    }}
+                />
+                <TextField
+                    value={board.description}
+                    placeholder="Add description here"
+                    multiline
+                    variant="outlined"
+                    onChange={updateDescription}
+                    fullWidth
+                    sx={{
+                        '& .MuiOutlinedInput-input': { padding: 0 },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'unset' },
+                        '& .MuiOutlinedInput-root': { fontSize: '0.8rem', },
+                        '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            border: 'none'
+                        }
+                    }}
+                />
+            </Box>
+            <Box>
+                <Sections data={board.sections} boardId={boardId} />
+            </Box>
+        </Box>
+    </>
+    }
 };
 
 export default Board;
