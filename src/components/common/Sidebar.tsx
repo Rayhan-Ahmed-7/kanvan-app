@@ -10,12 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { dispatch, useSelector } from "../../store";
-import {
-  AddBoxOutlined,
-  ArrowBack,
-  ArrowRightAltOutlined,
-  LogoutOutlined,
-} from "@mui/icons-material";
+import { AddBoxOutlined, ArrowBack, LogoutOutlined } from "@mui/icons-material";
 import LocalStorageService from "../../services/ localStorageService";
 import { Link, useNavigate } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";

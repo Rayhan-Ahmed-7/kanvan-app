@@ -142,7 +142,6 @@ const Board = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            width: "100%",
           }}
         >
           <IconButton onClick={() => dispatch(updateDrawer({ open: !open }))}>
@@ -159,47 +158,49 @@ const Board = () => {
             <DeleteOutlined />
           </IconButton>
         </Box>
-        <Box sx={{ padding: "10px 50px" }}>
-          <Box>
-            <EmojiPicker icon={board.icon} onChange={selectIcon} />
-            <TextField
-              value={board.title}
-              placeholder="Untitled"
-              variant="outlined"
-              fullWidth
-              onChange={updateTitle}
-              sx={{
-                "& .MuiOutlinedInput-input": { padding: 0 },
-                "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
-                "& .MuiOutlinedInput-root": {
-                  fontSize: "2rem",
-                  fontWeight: "700",
-                },
-                "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  border: "unset",
-                },
-              }}
-            />
-            <TextField
-              value={board.description}
-              placeholder="Add description here"
-              multiline
-              variant="outlined"
-              onChange={updateDescription}
-              fullWidth
-              sx={{
-                "& .MuiOutlinedInput-input": { padding: 0 },
-                "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
-                "& .MuiOutlinedInput-root": { fontSize: "0.8rem" },
-                "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-              }}
-            />
-          </Box>
-          <Box>
-            <Sections data={board.sections} boardId={boardId} />
-          </Box>
+        <Box
+          sx={{
+            padding: { xs: "10px 0px", md: "10px 50px" },
+          }}
+        >
+          <EmojiPicker icon={board.icon} onChange={selectIcon} />
+          <TextField
+            value={board.title}
+            placeholder="Untitled"
+            variant="outlined"
+            fullWidth
+            onChange={updateTitle}
+            sx={{
+              "& .MuiOutlinedInput-input": { padding: 0 },
+              "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
+              "& .MuiOutlinedInput-root": {
+                fontSize: { xs: "1.5rem", md: "2rem" },
+                fontWeight: "700",
+              },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: "unset",
+              },
+            }}
+          />
+          <TextField
+            value={board.description}
+            placeholder="Add description here"
+            multiline
+            variant="outlined"
+            onChange={updateDescription}
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-input": { padding: 0 },
+              "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
+              "& .MuiOutlinedInput-root": {
+                fontSize: { xs: "0.7rem", md: "1rem" },
+              },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
+            }}
+          />
+          <Sections data={board.sections} boardId={boardId} />
         </Box>
       </>
     );
