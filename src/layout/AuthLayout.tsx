@@ -9,47 +9,51 @@ import { dispatch } from "../store";
 import { addUser } from "../store/reducer/userSlice";
 
 const AuthLayout = () => {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const checkAuth = async () => {
-            const user = await authUtils.isAuthenticated();
-            if (!user) {
-                setLoading(false);
-            } else {
-                dispatch(addUser(user?.data?.data))
-                navigate('/');
-            }
-        }
-        checkAuth();
-    }, [navigate]);
-    const theme = useTheme()
-    return loading ? (
-        <Loading fullHeight />
-    ) : (
-        <Container component='main'>
-            <Box sx={{
-                height:'100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent:'center',
-            }}>
-                <AuthBackground/>
-                <Card sx={{
-                    padding:3,
-                    border: '1px solid',
-                    borderRadius: 1.5,
-                    borderColor: theme.palette.divider,
-                    width: { xs: 400, md: 480 }
-                }}>
-                    <Stack alignItems='center'>
-                        <img src={assets.logo.light} height={100} />
-                    </Stack>
-                    <Outlet />
-                </Card>
-            </Box>
-        </Container>
-    )
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const user = await authUtils.isAuthenticated();
+      if (!user) {
+        setLoading(false);
+      } else {
+        dispatch(addUser(user?.data?.data));
+        navigate("/");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+  const theme = useTheme();
+  return loading ? (
+    <Loading fullHeight />
+  ) : (
+    <Container component="main">
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <AuthBackground />
+        <Card
+          sx={{
+            padding: 3,
+            border: "1px solid",
+            borderRadius: 1.5,
+            borderColor: theme.palette.divider,
+            width: { xs: 400, md: 480 },
+          }}
+        >
+          <Stack alignItems="center" sx={{ padding: "15px 0px" }}>
+            <img src={assets.logo.light} height={60} />
+          </Stack>
+          <Outlet />
+        </Card>
+      </Box>
+    </Container>
+  );
 };
 
 export default AuthLayout;

@@ -1,0 +1,13 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185 185" width="185" height="185">
+	<title>logo-svg</title>
+	<style>
+		.s0 { fill: #45a1da } 
+		.s1 { fill: #ffffff } 
+	</style>
+	<g id="Layer">
+		<g id="Layer">
+			<path id="Layer" fill-rule="evenodd" class="s0" d="m114.4 13.5c61.7 16.5 72.6 46.3 58.1 100.7-14.6 54.4-38.9 74.7-100.6 58.2-61.7-16.5-72.6-46.3-58.1-100.7 14.5-54.4 39-74.7 100.6-58.2z"/>
+			<path id="Layer" fill-rule="evenodd" class="s1" d="m77.1 115.4l55.7-55.7c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5l-61 61c-2.9 2.9-7.6 2.9-10.5 0l-24.5-24.5c-2.9-2.9-2.9-7.6 0-10.5 2.9-2.9 7.6-2.9 10.5 0z"/>
+		</g>
+	</g>
+</svg>
