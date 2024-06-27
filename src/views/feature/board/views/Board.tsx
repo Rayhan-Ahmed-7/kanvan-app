@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import BoardAPI from "../api/boardApi";
 import { dispatch, useSelector } from "../../../../store";
 import { IBoard } from "../types";
-import { Box, IconButton, TextField } from "@mui/material";
+import { Box, IconButton, TextField, ToggleButton } from "@mui/material";
 import {
   DeleteOutlined,
   Menu,
@@ -18,6 +18,7 @@ import Sections from "../../section/views/Sections";
 import { DataStatus } from "../../../../utils/types";
 import Loading from "../../../../components/common/Loading";
 import { updateDrawer } from "../../../../store/reducer/drawer";
+import ThemeSwitch from "../../../../components/common/ThemeSwitch";
 
 const Board = () => {
   const { boardId } = useParams();
@@ -154,9 +155,12 @@ const Board = () => {
               <StarBorderOutlined />
             )}
           </IconButton>
-          <IconButton onClick={deleteBoard}>
-            <DeleteOutlined />
-          </IconButton>
+          <Box>
+            <IconButton onClick={deleteBoard}>
+              <DeleteOutlined />
+            </IconButton>
+            <ThemeSwitch />
+          </Box>
         </Box>
         <Box
           sx={{
