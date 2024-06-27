@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import BoardAPI from "../api/boardApi";
 import { dispatch, useSelector } from "../../../../store";
 import { IBoard } from "../types";
-import { Box, IconButton, TextField, ToggleButton } from "@mui/material";
+import { Box, IconButton, TextField } from "@mui/material";
 import {
   DeleteOutlined,
   Menu,

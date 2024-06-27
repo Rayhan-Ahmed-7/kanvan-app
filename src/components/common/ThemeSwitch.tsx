@@ -51,7 +51,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const ThemeSwitch = () => {
   const { mode, onChangeMode } = useThemeConfig();
 
-  const handleChange = (event: any, checked: boolean) => {
+  const handleChange = (_: any, checked: boolean) => {
     onChangeMode(checked ? ThemeMode.DARK : ThemeMode.LIGHT);
   };
 

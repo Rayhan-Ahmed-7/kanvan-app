@@ -14,8 +14,13 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TaskAPI from "../../views/feature/task/api/taskApi";
 import { debounce } from "../../utils/util";
+import useThemeConfig from "../../hooks/useThemeConfig";
+import { ThemeMode } from "../../theme/types/themeMode";
+import { format } from "date-fns";
 
 const TaskModal = (props: any) => {
+  const { mode } = useThemeConfig();
+
   const taskApi = new TaskAPI();
   // const boardId = props.boardId;
   const [task, setTask] = useState(props?.task);
@@ -27,7 +32,7 @@ const TaskModal = (props: any) => {
     setTitle(props.task?.title || "");
     setContent(props.task?.content || "");
     if (props.task != "") {
-      updateEditorHeight();
+      // updateEditorHeight();
     }
   }, [props.task]);
   const updateEditorHeight = () => {
@@ -90,6 +95,7 @@ const TaskModal = (props: any) => {
   };
   return (
     <Modal
+      className={mode == ThemeMode.LIGHT ? "light" : "dark"}
       open={task != ""}
       onClose={handleClose}
       closeAfterTransition
@@ -156,9 +162,11 @@ const TaskModal = (props: any) => {
               }}
             />
             <Typography variant="body2" fontWeight="700">
-              {task !== undefined ? task?.createdAt : ""}
+              {task !== undefined && task.createdAt
+                ? format(task?.createdAt, "dd-mm-yyyy hh:mm a")
+                : ""}
             </Typography>
-            <Divider sx={{ margin: "1.5rem 0" }} />
+            <Divider sx={{ margin: { xs: "1.5rem 0", md: "1.5rem 0" } }} />
             <Box
               ref={boxRef}
               sx={{
