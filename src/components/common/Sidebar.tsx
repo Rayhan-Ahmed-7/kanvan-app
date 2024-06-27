@@ -34,7 +34,7 @@ const Sidebar = (props: any) => {
 
   return (
     <Drawer
-      container={window.document.body}
+      // container={window.document.body}
       open={open}
       variant={isSmallScreen ? "temporary" : "persistent"}
       anchor="left"
@@ -48,7 +48,7 @@ const Sidebar = (props: any) => {
         sx={{
           width: 250,
           height: "100vh",
-          backgroundColor: "black",
+          // backgroundColor: "black",
         }}
       >
         <ListItem>
@@ -60,7 +60,7 @@ const Sidebar = (props: any) => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="body2" fontWeight={700} color="white">
+            <Typography variant="body2" fontWeight={700}>
               {user?.username}
             </Typography>
             <IconButton onClick={logOut}>
@@ -84,7 +84,7 @@ const Sidebar = (props: any) => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="body2" fontWeight={700} color="white">
+            <Typography variant="body2" fontWeight={700}>
               private
             </Typography>
             <IconButton onClick={() => createBoard({ userId: "" })}>
