@@ -7,9 +7,12 @@ import Loading from "../components/common/Loading";
 import AuthBackground from "../views/feature/auth/views/AuthBackground";
 import { dispatch } from "../store";
 import { addUser } from "../store/reducer/userSlice";
+import useThemeConfig from "../hooks/useThemeConfig";
+import { ThemeMode } from "../theme/types/themeMode";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
+  const { mode } = useThemeConfig();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const checkAuth = async () => {
@@ -47,7 +50,12 @@ const AuthLayout = () => {
           }}
         >
           <Stack alignItems="center" sx={{ padding: "15px 0px" }}>
-            <img src={assets.logo.light} height={60} />
+            <img
+              src={
+                mode == ThemeMode.DARK ? assets.logo.light : assets.logo.dark
+              }
+              height={60}
+            />
           </Stack>
           <Outlet />
         </Card>
