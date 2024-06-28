@@ -14,7 +14,7 @@ export enum AlertDialogType {
 }
 
 export interface AlertDialogProps {
-  open?: boolean;
+  open: boolean;
   message: string;
   type: AlertTypes;
   duration?: number;

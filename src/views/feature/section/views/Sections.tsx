@@ -180,7 +180,7 @@ const Sections = (props: any) => {
                           flexGrow: 1,
                           "& .MuiOutlinedInput-input": { padding: 0 },
                           "& .MuiOutlinedInput-notchedOutline": {
-                            border: "unset",
+                            border: "none",
                           },
                           "& .MuiOutlinedInput-root": {
                             fontSize: "1rem",
@@ -189,6 +189,14 @@ const Sections = (props: any) => {
                           "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
                             border: "none",
                           },
+                          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                            {
+                              border: "none",
+                            },
+                          "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                            {
+                              border: "none",
+                            },
                         }}
                       />
 

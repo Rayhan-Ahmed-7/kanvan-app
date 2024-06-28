@@ -176,16 +176,25 @@ const Board = () => {
             onChange={updateTitle}
             sx={{
               "& .MuiOutlinedInput-input": { padding: 0 },
-              "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
+              "& .MuiOutlinedInput-notchedOutline": { border: "none" },
               "& .MuiOutlinedInput-root": {
                 fontSize: { xs: "1.5rem", md: "2rem" },
                 fontWeight: "700",
               },
               "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                border: "unset",
+                border: "none",
               },
+              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                {
+                  border: "none",
+                },
+              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                {
+                  border: "none",
+                },
             }}
           />
+
           <TextField
             value={board.description}
             placeholder="Add description here"
@@ -195,13 +204,21 @@ const Board = () => {
             fullWidth
             sx={{
               "& .MuiOutlinedInput-input": { padding: 0 },
-              "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
+              "& .MuiOutlinedInput-notchedOutline": { border: "none" },
               "& .MuiOutlinedInput-root": {
                 fontSize: { xs: "0.7rem", md: "1rem" },
               },
               "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
                 border: "none",
               },
+              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                {
+                  border: "none",
+                },
+              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                {
+                  border: "none",
+                },
             }}
           />
           <Sections data={board.sections} boardId={boardId} />

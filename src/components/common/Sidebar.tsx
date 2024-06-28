@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import FavouriteList from "./FavouriteList";
 import { updateDrawer } from "../../store/reducer/drawer";
+import dialog from "../../utils/dialog";
 
 const Sidebar = (props: any) => {
   const navigate = useNavigate();
@@ -28,8 +29,9 @@ const Sidebar = (props: any) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const logOut = () => {
-    LocalStorageService.removeAccessToken();
-    navigate("/login");
+    dialog.showInfoDialog({
+      message: "Are You Sure About This?",
+    });
   };
 
   return (

@@ -11,6 +11,7 @@ import ThemeProvider from "../context/themeContext";
 import Snackbar from "../components/Snackbar";
 import { Provider } from "react-redux";
 import { store } from "../store";
+import AlertDialog from "../components/common/AlertDialog";
 function App() {
   new AxiosService().init();
   return (
@@ -18,6 +19,7 @@ function App() {
       <ThemeProvider>
         <AppTheme>
           <Snackbar />
+          <AlertDialog />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<AuthLayout />}>
