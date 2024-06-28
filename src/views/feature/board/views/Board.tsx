@@ -19,6 +19,7 @@ import { DataStatus } from "../../../../utils/types";
 import Loading from "../../../../components/common/Loading";
 import { updateDrawer } from "../../../../store/reducer/drawer";
 import ThemeSwitch from "../../../../components/common/ThemeSwitch";
+import dialog from "../../../../utils/dialog";
 
 const Board = () => {
   const { boardId } = useParams();
@@ -125,12 +126,22 @@ const Board = () => {
     }, 500);
     debounceFunction();
   };
-  const deleteBoard = async () => {
-    let newBoards = boards.filter((board) => board._id != boardId);
-    let newFavorites = favourites.filter((board) => board._id != boardId);
-    dispatch(setBoards(newBoards));
-    dispatch(setFavourites(newFavorites));
-    await boardApi.deleteBoard({ boardId });
+  const deleteBoard = () => {
+    dialog.showWarningDialog({
+      message: "Are you sure you want to delete this board?",
+      okBtnText: "Yes",
+      onOk: async () => {
+        try {
+          let newBoards = boards.filter((board) => board._id != boardId);
+          let newFavorites = favourites.filter((board) => board._id != boardId);
+          dispatch(setBoards(newBoards));
+          dispatch(setFavourites(newFavorites));
+          await boardApi.deleteBoard({ boardId });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
   };
   if (loading == DataStatus.loading) {
     return <Loading fullHeight />;

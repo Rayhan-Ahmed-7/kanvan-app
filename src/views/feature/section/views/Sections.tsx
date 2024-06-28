@@ -14,6 +14,7 @@ import { AddOutlined, DeleteOutline } from "@mui/icons-material";
 import { debounce } from "../../../../utils/util";
 import TaskAPI from "../../task/api/taskApi";
 import TaskModal from "../../../../components/common/TaskModal";
+import dialog from "../../../../utils/dialog";
 interface ISection {
   _id: string;
   title: string;
@@ -55,13 +56,19 @@ const Sections = (props: any) => {
     debouncedFunction();
   };
   const deleteSection = async (id: string) => {
-    try {
-      await _sectionApi.deleteSection({ sectionId: id });
-      const newData = [...data].filter((e: any) => e._id !== id);
-      setData(newData);
-    } catch (error) {
-      console.log(error);
-    }
+    dialog.showWarningDialog({
+      message: "Are you sure you want to delete this section?",
+      okBtnText: "Yes",
+      onOk: async () => {
+        try {
+          await _sectionApi.deleteSection({ sectionId: id });
+          const newData = [...data].filter((e: any) => e._id !== id);
+          setData(newData);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
   };
   const createTask = async (sectionId: string) => {
     try {

@@ -11,7 +11,7 @@ const initialState: SnackbarProps = {
     vertical: "top",
     horizontal: "right",
   },
-  transition: "Fade",
+  transition: "SlideLeft",
   close: true,
   actionButton: false,
   maxStack: 3,

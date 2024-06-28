@@ -29,8 +29,12 @@ const Sidebar = (props: any) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const logOut = () => {
-    dialog.showInfoDialog({
+    dialog.showWarningDialog({
       message: "Are You Sure About This?",
+      onOk: () => {
+        LocalStorageService.removeAccessToken();
+        navigate("/login");
+      },
     });
   };
 

@@ -17,6 +17,7 @@ import { debounce } from "../../utils/util";
 import useThemeConfig from "../../hooks/useThemeConfig";
 import { ThemeMode } from "../../theme/types/themeMode";
 import { format } from "date-fns";
+import dialog from "../../utils/dialog";
 
 const TaskModal = (props: any) => {
   const { mode } = useThemeConfig();
@@ -53,11 +54,17 @@ const TaskModal = (props: any) => {
     props.onClose();
   };
   const deleteTask = async () => {
-    try {
-      await taskApi.deleteTask({ taskId: task._id });
-      setTask("");
-      props.onDelete(task);
-    } catch (error) {}
+    dialog.showWarningDialog({
+      message: "Are you sure you want to delete this task?",
+      okBtnText: "Yes",
+      onOk: async () => {
+        try {
+          await taskApi.deleteTask({ taskId: task._id });
+          setTask("");
+          props.onDelete(task);
+        } catch (error) {}
+      },
+    });
   };
   const updateTaskTitle = (e: any) => {
     const newTitle = e.target.value;
@@ -150,7 +157,7 @@ const TaskModal = (props: any) => {
               sx={{
                 flexGrow: 1,
                 "& .MuiOutlinedInput-input": { padding: 0 },
-                "& .MuiOutlinedInput-notchedOutline": { border: "unset" },
+                "& .MuiOutlinedInput-notchedOutline": { border: "none" },
                 "& .MuiOutlinedInput-root": {
                   fontSize: { xs: "1.5rem", md: "2.5rem" },
                   fontWeight: "600",
@@ -158,6 +165,14 @@ const TaskModal = (props: any) => {
                 "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
                   border: "none",
                 },
+                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                  {
+                    border: "none",
+                  },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                  {
+                    border: "none",
+                  },
                 marginBottom: "10px",
               }}
             />
