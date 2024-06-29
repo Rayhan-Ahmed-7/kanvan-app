@@ -8,8 +8,8 @@ const initialState: AlertDialogProps = {
   duration: 1000,
   cancelBtnText: "Cancel",
   okBtnText: "Ok",
-  onCancel: () => {},
-  onOk: () => {},
+  onCancel: async () => {},
+  onOk: async () => {},
 };
 
 const alertDialog = createSlice({

@@ -31,7 +31,7 @@ const Sidebar = (props: any) => {
   const logOut = () => {
     dialog.showWarningDialog({
       message: "Are You Sure About This?",
-      onOk: () => {
+      onOk: async () => {
         LocalStorageService.removeAccessToken();
         navigate("/login");
       },
@@ -67,7 +67,9 @@ const Sidebar = (props: any) => {
             }}
           >
             <Typography variant="body2" fontWeight={700}>
-              {user?.username}
+              Hi{" "}
+              {user?.username?.charAt(0).toUpperCase() +
+                user?.username?.slice(1)}
             </Typography>
             <IconButton onClick={logOut}>
               <LogoutOutlined fontSize="small" />
